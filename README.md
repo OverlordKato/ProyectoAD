@@ -1,4 +1,4 @@
-Base de datos: mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/ProyectoNode1?retryWrites=true&w=majority
+mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/ProyectoNode1?retryWrites=true&w=majority
 
 
 
