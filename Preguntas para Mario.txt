@@ -1,0 +1,47 @@
+Ellie
+    - 
+
+Adri
+    -
+
+Abraham
+    - "__v 0" esta linea en MongoDBCompass, a que hace referencia.
+
+
+Arthur
+    - A qué se refiere el ejercicio cuando pone que una Asignatura tiene que soportar enlaces externos (URLs)? 
+      Debe poder hacerse click a la asignatura y que lleve a un sitio web en concreto?
+    - Para las personas, alumnos y profesores, basta con que tengan un email y contraseña, o deben tener nombre, lista de asignaturas, etc? 
+    - Recomiendas que las asignaturas tengan listas de alumnos y de profesores, o que cada alumno y profesor tenga su propia lista de asignaturas?   
+    - Es necesario incluir un diagrama para este proyecto? Tendría que ser de clases, de las pantallas del proyecto, otro?
+
+
+Respuestas Varias
+
+- El administrador es el que puede crear usuarios, solo deberiamos dejar el sign in del modelo crudlogin
+- Cuando crea un usuario, debe comprobarse si se repite el usuario
+- Solo necesitamos la direccion del servidor dentro del app.js
+- Al agregar una asignatura, la interfaz se parecerá a la de añadir task
+- Para cada usuario la vista cambia, se gestiona con ifs con la condición del rol del usuario
+- No necesitamos un diagrama para este proyecto
+
+
+Tablas:
+
+Asignatura
+    -id
+    -nombre
+    -plan estudios
+    -cuatrismestre
+    -curso
+    -software[google.com, github.com] -> Eso son los URLs, las webs pueden ser las que queramos
+
+Usuario
+    -id
+    -nombre
+    -apellidos
+    -rol
+    -email
+    -contraseña
+    Asignaturas["...", "...", "..."]  -> Array de Asignaturas, aunque también podemos crear una tabla aparte para hacer una relación de muchos a muchos
+
