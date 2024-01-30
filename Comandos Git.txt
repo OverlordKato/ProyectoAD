@@ -1,0 +1,22 @@
+- git checkout -b feature/loquesea  -> Crea una nueva rama
+- git diff    -> Mirar los cambios realizados en local
+- git checkout nombredelarama   -> Cambiar a esa rama
+- git add -A   -> Anadir todos los cambios al commit, salen en status como staged
+- git add nombredelarchivo    -> Anadir los cambios del archivo al commit
+- git commit -m 'comentariodelcommit'  -> Crear el commit 
+- git status   -> Para ver como va la cosa
+- git commit --amend   -> Anadir mas cambios a un commit ya creado, primero hay que hacerle un add del archivo
+- git log   -> Muestra los cambios realizados
+- git checkout iddelcommit   -> Si despu'es usamos less nombredelarchivo, podemos ver como estaba ese archivo dentro del commit
+- git reset iddelcommit   -> Vuelve al commit pero deja los cambios locales
+- git reset --hard iddelcommit   -> Vuelve al commit y borra cambios locales
+- git push   -> Mete el commit de la rama actual a la nube
+- git push --force   -> Para meter un cambio de un commit --amend
+- git pull   -> Saca los commits de las ramas hechos por otros en la nube
+- git merge  -> Mejor verlo desde GitHub
+- git help   -> Aiuda
+- git stash push   -> Mete los cambios al stash y los quita del directorio actual
+- git stash pop numerodestash(si hay varios)   -> Saca los cambios del stash y te lo deja donde estaban si no hay conflictos  
+- git tag loquesea -m 'loquesea'   -> Anadir una tag a un commit
+- git push --tags   -> Subir las tags
+
