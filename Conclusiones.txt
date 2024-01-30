@@ -1,4 +1,4 @@
-Aquí se apuntan conclusiones que se sacan al mirar el código de Mario
+Aquí se apuntan conclusiones que se sacan al mirar el código de Mario. Sed lo más descriptivos posibles.
 
 Adri
   -
