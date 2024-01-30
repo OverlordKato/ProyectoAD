@@ -2,24 +2,42 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TaskSchema = Schema({
-  title: {
+  //Igual no se requiere un id? Ya se pone un _id automático
+  // id: {
+  //   type: Number,
+  //   required: true
+  // },
+  nombre: {
     type: String,
     required: true
-},
-
-  description: {
+  },
+  planEstudios: {
     type: String,
     required: true
-},
-  status: {
-    type: Boolean,
-    default: false
+  },
+  cuatrimestre: {
+    type: String,
+    required: true
+  },
+  curso: {
+    type: String,
+    required: true
+  },
+  software: {
+    type: Array,
+    required: false
   },
   usuario: [
     {type: mongoose.Schema.Types.ObjectId, ref:'user'}
-]
+  ]
 });
 
+//En los apuntes de Mario se ve que pone cada atributo a la constante por separado, pero aquí se junta todo?
+//Añadido por Mario, puede que incompleto, es para buscar todas las asignaturas en vez de las asignadas a usuarios
+TaskSchema.methods.findAll= async function () {
+  const Task = mongoose.model("tasks", TaskSchema);
+  return await Task.find();
+};
 
 TaskSchema.methods.findAll= async function (usuario) {
   const Task = mongoose.model("tasks", TaskSchema);
