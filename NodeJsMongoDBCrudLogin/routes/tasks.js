@@ -5,15 +5,16 @@ const Task = require('../models/task');
 
 router.get('/tasks',isAuthenticated, async (req, res) => {
   const task = new Task();
-  const tasks = await task.findAll(req.user._id);
+  const tasks = await task.findAll();
+  console.log(tasks);
   res.render('tasks', {
     tasks
   });
 });
 
+//Quitado el   task.usuario=req.user._id; debajo de la constante
 router.post('/tasks/add', isAuthenticated,async (req, res, next) => {
   const task = new Task(req.body);
-  task.usuario=req.user._id;
   await task.insert();
   res.redirect('/tasks');
 });

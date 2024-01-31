@@ -33,31 +33,31 @@ const TaskSchema = Schema({
 });
 
 //En los apuntes de Mario se ve que pone cada atributo a la constante por separado, pero aquí se junta todo?
-//Añadido por Mario, puede que incompleto, es para buscar todas las asignaturas en vez de las asignadas a usuarios
+//Para buscar todas las asignaturas simultáneamente en vez de las asignadas a usuarios
 TaskSchema.methods.findAll= async function () {
   const Task = mongoose.model("tasks", TaskSchema);
   return await Task.find();
 };
 
-TaskSchema.methods.findAll= async function (usuario) {
+//Cambiado el nombre del método para evitar conflictos
+TaskSchema.methods.findAllUser= async function (usuario) {
   const Task = mongoose.model("tasks", TaskSchema);
   return await Task.find({'usuario':usuario});
 };
 
+//Cambiado a lo que nos dijo Mario de Promises
 TaskSchema.methods.insert= async function () {
-  //await this.save();
-  await this.save((err, res) => {
-    err ? console.log(err) : "";
-    console.log("saved: " + res);
-  });
+  await this.save()
+  .then(result => console.log(result))
+  .catch(error => console.log(error));
 };
 
+//Cambiado a lo que nos dijo Mario de Promises
 TaskSchema.methods.update= async (id, task) => {
   const Task = mongoose.model("tasks", TaskSchema);
-  await Task.updateOne({_id: id}, task, err => {
-    if (err) console.log(err);
-  });
-  console.log(id + " updated");
+  await Task.updateOne({_id: id})
+    .then(result => console.log(result))
+  .catch(error => console.log(error));
 };
 
 TaskSchema.methods.delete= async function (id) {
