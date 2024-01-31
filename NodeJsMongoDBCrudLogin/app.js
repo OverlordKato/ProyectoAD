@@ -7,14 +7,15 @@ const session = require('express-session');
 const passport = require('passport');
 const logger = require('morgan');
 var app = express();
-require('./database');
+//require('./database');
 require('./passport/local-auth');
 var tasksRouter = require('./routes/tasks');
 var usersRouter = require('./routes/users');
 
 //Conexión con la base de datos
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/?retryWrites=true&w=majority',
+//Para cambiar de base de datos, añadir el nombre de la misma después del .net/
+mongoose.connect('mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/PruebaArthur?retryWrites=true&w=majority',
   { useNewUrlParser: true, useUnifiedTopology: true }
 ).then(db => console.log('db connected'))
   .catch(err => console.log(err));
