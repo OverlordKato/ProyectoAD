@@ -2,7 +2,7 @@
 
 ```
 
-  git checkout ##b feature/loquesea
+  git checkout -b feature/loquesea
 
 ```
 
@@ -31,7 +31,7 @@
 
 ```
 
-  git add ##A
+  git add -A
 
 ```
 
@@ -47,7 +47,7 @@
 
 ```
 
-  git commit ##m 'comentariodelcommit'
+  git commit -m 'comentariodelcommit'
 
 ```
 
@@ -63,7 +63,7 @@
 
 ```
 
-  git commit ####amend
+  git commit --amend
 
 ```
 
@@ -116,7 +116,7 @@
 
 ```  
 
-  git push ####force
+  git push --force
 
 ```
 
@@ -163,7 +163,7 @@
 
 ```
 
-  git tag loquesea ##m 'loquesea'
+  git tag loquesea -m 'loquesea'
 
 ```
 
@@ -171,6 +171,6 @@
 
 ```
 
-  git push ####tags
+  git push --tags
 
 ```
