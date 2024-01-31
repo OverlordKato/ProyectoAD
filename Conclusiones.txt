@@ -10,4 +10,5 @@ Ellie
   -
 
 Arthur
-  -
+  - Si cambiamos los atributos en los modelos task.js o user.js, hay que tener en cuenta que los campos correspondientes a esos atributos también están en las vistas correspondientes, tasks.ejs (name en líneas 12 y 15) y signup.ejs/signin.ejs (name en líneas 6 y 7), y esos name se deben cambiar, por ejemplo para las asignaturas, de title (que correspondía a task) a nombre (que corresponde a signatura). También tendremos que añadir más campos en general, ya que trabajamos con más atributos.
+  - 
