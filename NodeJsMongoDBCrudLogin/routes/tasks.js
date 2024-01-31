@@ -12,9 +12,9 @@ router.get('/tasks',isAuthenticated, async (req, res) => {
   });
 });
 
-//Quitado el   task.usuario=req.user._id; debajo de la constante
 router.post('/tasks/add', isAuthenticated,async (req, res, next) => {
   const task = new Task(req.body);
+  //Quitado lo siguiente de esta línea, que asocia una tarea a un usuario   task.usuario=req.user._id;
   await task.insert();
   res.redirect('/tasks');
 });

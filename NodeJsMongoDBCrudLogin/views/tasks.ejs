@@ -58,7 +58,8 @@
               <td><%= tasks[i].software.join(', ') %></td>
               <td>
                 <!-- Aquí puedes agregar tus operaciones, similar a tu código original -->
-                <a class="<%= tasks[i].status ? 'btn btn-success' : 'btn btn-dark'%>" href="/tasks/turn/<%= tasks[i]._id %>">Done</a>
+                <!--Se quita la línea siguiente para no tener el botón de Done-->
+                <!--<a class="<%= tasks[i].status ? 'btn btn-success' : 'btn btn-dark'%>" href="/tasks/turn/<%= tasks[i]._id %>">Done</a>-->
                 <a href="/tasks/delete/<%= tasks[i]._id %>" class="btn btn-danger">Delete</a>
                 <a href="/tasks/edit/<%= tasks[i]._id %>" class="btn btn-info">Edit</a>
               </td>
