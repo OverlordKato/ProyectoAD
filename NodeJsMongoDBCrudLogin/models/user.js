@@ -16,13 +16,6 @@ userSchema.methods.comparePassword= function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-userSchema.methods.encryptPassword = (password) => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-};
-userSchema.methods.comparePassword= function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
-
 userSchema.methods.findEmail= async (email) => {
   const User = mongoose.model("user", userSchema);
   return  await User.findOne({'email': email})
