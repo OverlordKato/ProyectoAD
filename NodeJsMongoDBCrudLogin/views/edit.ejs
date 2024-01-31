@@ -1,5 +1,5 @@
 <% include partials/_header %>
-
+<!--Cambiado a los atributos de asignatura-->
 <div class="container">
   <div class="row">
     <!--FORM-->
@@ -8,12 +8,19 @@
         <div class="card-body">
           <form action="/tasks/edit/<%= task._id %>" method="post">
             <div class="form-group">
-              <input class="form-control" type="text" name="title" placeholder="Title" value="<%= task.title %>">
+              <input class="form-control" type="text" name="nombre" placeholder="Nombre" value="<%= task.nombre %>">
             </div>
             <div class="form-group">
-              <textarea class="form-control" name="description" cols="80"
-                placeholder="Add a Description"
-                ><%= task.description %></textarea>
+              <label for="planEstudios">Plan de Estudios:</label>
+              <input class="form-control" name="planEstudios" id="planEstudios" placeholder="Plan de Estudios" value="<%= task.planEstudios %>" required></input>
+            </div>
+            <div class="form-group">
+              <label for="cuatrimestre">Cuatrimestre:</label>
+              <input class="form-control" type="text" name="cuatrimestre" id="cuatrimestre" placeholder="Cuatrimestre" value="<%= task.cuatrimestre %>" required>
+            </div>
+            <div class="form-group">
+              <label for="curso">Curso:</label>
+              <input class="form-control" type="text" name="curso" id="curso" placeholder="Curso" value="<%= task.curso %>" required>
             </div>
             <button class="btn btn-primary" type="submit">
               Update 
