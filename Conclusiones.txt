@@ -7,7 +7,14 @@ Abraham
   -
 
 Ellie
-  -
+  -Carpeta "passport"
+    -local-auth.js
+      -"local-signin" y "local-signup" (lineas 15-31 y 33-47, respectivamente)
+        -Son usados en las rutas de "signin" y "signup" de users.js
+        -Se encargan de mandar los mensajes de error que luego recogen las pantallas de signin y signup
+        -Por lo que he visto parecen métodos de un módulo específico para inicios de sesión con usuario y contraseña,
+        por lo que no he conseguido que tome "rol" como parámetro para introducirlo en usuarios nuevos,
+        pero, modificando el código de local-auth.js, sí se le podría asignar un rol al objeto justo antes de su añadido, a modo de rol "por defecto"
 
 Arthur
   - Si cambiamos los atributos en los modelos task.js o user.js, hay que tener en cuenta que los campos correspondientes a esos atributos 
