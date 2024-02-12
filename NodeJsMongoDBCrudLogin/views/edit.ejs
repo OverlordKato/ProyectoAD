@@ -1,18 +1,17 @@
 <% include partials/_header %>
-<!--Cambiado a los atributos de asignatura-->
 <div class="container">
   <div class="row">
-    <!--FORM-->
     <div class="col-md-5 offset-md-3">
       <div class="card">
         <div class="card-body">
           <form action="/tasks/edit/<%= task._id %>" method="post">
             <div class="form-group">
+              <label for="nombre">Nombre:</label>
               <input class="form-control" type="text" name="nombre" placeholder="Nombre" value="<%= task.nombre %>">
             </div>
             <div class="form-group">
               <label for="planEstudios">Plan de Estudios:</label>
-              <input class="form-control" name="planEstudios" id="planEstudios" placeholder="Plan de Estudios" value="<%= task.planEstudios %>" required></input>
+              <input class="form-control" name="planEstudios" id="planEstudios" placeholder="Plan de Estudios" value="<%= task.planEstudios %>" required>
             </div>
             <div class="form-group">
               <label for="cuatrimestre">Cuatrimestre:</label>
@@ -22,14 +21,57 @@
               <label for="curso">Curso:</label>
               <input class="form-control" type="text" name="curso" id="curso" placeholder="Curso" value="<%= task.curso %>" required>
             </div>
-            <button class="btn btn-primary" type="submit">
-              Update 
-            </button>
+            <!--Una separación y un apartado para software-->
+            <hr> 
+            <h5>Software Relacionado:</h5>
+            <!--Muestra la lista de software asociados-->
+            <% task.software.forEach(function(software) { %>
+              <div class="form-group">
+                <input class="form-control" type="text" name="software_url" placeholder="URL" value="<%= software.url %>">
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="software_descripcion" placeholder="Descripción" value="<%= software.descripcion %>">
+              </div>
+            <% }); %>
+            <!--Apartado para meter un software nuevo-->
+            <div id="new-software">
+              <div class="new-software-group">
+                <input class="form-control" type="text" name="nuevo_software_url[]" placeholder="Nueva URL">
+                <input class="form-control" type="text" name="nuevo_software_descripcion[]" placeholder="Nueva Descripción">
+                <!--Botón que se muestra después de cada apartado de software nuevo, permite eliminar el apartado-->
+                <button type="button" class="btn btn-danger" onclick="removeNewSoftware(this)">Eliminar</button>
+              </div>
+            </div>
+            <!--Botón que se muestra después del de borrar, permite meter un apartado nuevo de software, así podemos llenar el array sin tener que volver al menú edit todo el rato-->
+            <button class="btn btn-primary" type="button" onclick="addNewSoftware()">Agregar Nuevo Software</button>
+            <button class="btn btn-primary" type="submit">Actualizar</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <% include partials/_footer%>
+
+<!--Script para las funciones de poner un apartado nuevo, y de quitar apartados-->
+<script>
+  function addNewSoftware() {
+    const newSoftwareDiv = document.getElementById('new-software');
+    const newSoftwareGroup = document.createElement('div');
+    newSoftwareGroup.classList.add('new-software-group');
+    newSoftwareGroup.innerHTML = `
+      <div class="form-group">
+        <input class="form-control" type="text" name="nuevo_software_url[]" placeholder="Nueva URL">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="nuevo_software_descripcion[]" placeholder="Nueva Descripción">
+      </div>
+      <button type="button" class="btn btn-danger" onclick="removeNewSoftware(this)">Eliminar</button>
+    `;
+    newSoftwareDiv.appendChild(newSoftwareGroup);
+  }
+
+  function removeNewSoftware(button) {
+    button.closest('.new-software-group').remove();
+  }
+</script>

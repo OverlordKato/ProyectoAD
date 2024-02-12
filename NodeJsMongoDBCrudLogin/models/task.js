@@ -1,6 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//Intento de meter software como un schema nuevo, no parecía viable por el momento
+// const SoftwareSchema = new Schema({
+//   url: {
+//     type: String,
+//     required: true
+//   },
+//   // descripcion: {
+//   //   type: String,
+//   //   required: true
+//   // },
+//   task: {type: mongoose.Schema.Types.ObjectId, ref: 'tasks'}
+// });
+
 const TaskSchema = Schema({
   //Igual no se requiere un id? Ya se pone un _id automático
   // id: {
@@ -23,8 +36,12 @@ const TaskSchema = Schema({
     type: String,
     required: true
   },
+  //Esto parece lo más viable para meter un array de softwares de momento, aunque sea para hacer pruebas
   software: {
-    type: Array,
+    type: [{
+      url: {type: String},
+      descripcion: {type: String}
+    }],
     required: false
   },
   usuario: [
@@ -68,6 +85,21 @@ TaskSchema.methods.delete= async function (id) {
   console.log(id + " deleted");
 
 };
+
+//Métodos de cuando se intentó meter software coomo un nuevo schema
+// TaskSchema.methods.insertSoftware = async function (softwareData) {
+//   softwareData.task = this._id; 
+//   this.software.push(softwareData);
+//   await this.save();
+// };
+
+// TaskSchema.methods.updateSoftware = async function (softwareId, updatedSoftwareData) {
+//   const softwareIndex = this.software.findIndex(software => software._id.toString() === softwareId);
+//   if (softwareIndex !== -1) {
+//     this.software[softwareIndex] = { ...this.software[softwareIndex], ...updatedSoftwareData };
+//     await this.save();
+//   }
+// };
 
 TaskSchema.methods.findById= async function (id) {
   const Task = mongoose.model("tasks", TaskSchema);

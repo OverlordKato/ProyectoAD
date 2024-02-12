@@ -14,7 +14,11 @@ router.get('/tasks',isAuthenticated, async (req, res) => {
 
 router.post('/tasks/add', isAuthenticated,async (req, res, next) => {
   const task = new Task(req.body);
-  //Quitado lo siguiente de esta línea, que asocia una tarea a un usuario   task.usuario=req.user._id;
+  //No parecen necesarias las siguientes tres líneas, pero por si da error ya que creamos asignaturas sin software asignado
+  // if(!task.software){
+  //   task.software = [];
+  // }
+  //Quitado lo siguiente de esta línea, que asocia una tarea a un usuario ->   task.usuario=req.user._id;
   await task.insert();
   res.redirect('/tasks');
 });

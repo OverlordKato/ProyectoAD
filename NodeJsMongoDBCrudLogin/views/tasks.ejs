@@ -1,14 +1,16 @@
 <% include partials/_header %>
-
+<!--MODIFICADO EL ASPECTO PARA QUE SE MUESTRE CENTRADO-->
 <div class="container">
 <!-- Cambiado el formulario para adaptarse a los atributos de asignatura -->
-  <div class="row">
+  <div class="row justify-content-center mt-4">
     <!-- FORM -->
     <div class="col-md-5">
       <div class="card">
         <div class="card-body">
           <form action="/tasks/add" method="post">
             <div class="form-group">
+              <h5>Nueva Tarea</h5>
+              <br>
               <label for="nombre">Nombre:</label>
               <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" required>
             </div>
@@ -24,8 +26,6 @@
               <label for="curso">Curso:</label>
               <input class="form-control" type="text" name="curso" id="curso" placeholder="Curso" required>
             </div>
-           
-            <!-- Agrega más campos según sea necesario -->
             <button class="btn btn-primary" type="submit">Agregar</button>
           </form>
         </div>
@@ -34,7 +34,8 @@
   </div>
 
     <!-- LIST -->
-    <div class="col-md-7">
+    <div class="row justify-content-left mt-4">
+    <div class="col-md-12">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -55,9 +56,14 @@
               <td><%= tasks[i].planEstudios %></td>
               <td><%= tasks[i].cuatrimestre %></td>
               <td><%= tasks[i].curso %></td>
-              <td><%= tasks[i].software.join(', ') %></td>
               <td>
-                <!-- Aquí puedes agregar tus operaciones, similar a tu código original -->
+                <% for (var j=0; j < tasks[i].software.length; j++) { %>
+                  <div>URL: <%= tasks[i].software[j].url %></div>
+                  <div>Descripción: <%= tasks[i].software[j].descripcion %></div>
+                  <br>
+                <% } %>
+              </td>
+              <td>
                 <!--Se quita la línea siguiente para no tener el botón de Done-->
                 <!--<a class="<%= tasks[i].status ? 'btn btn-success' : 'btn btn-dark'%>" href="/tasks/turn/<%= tasks[i]._id %>">Done</a>-->
                 <a href="/tasks/delete/<%= tasks[i]._id %>" class="btn btn-danger">Delete</a>
@@ -68,6 +74,7 @@
         </tbody>
       </table>
     </div>
+  </div>
   </div>
 
 </div>
