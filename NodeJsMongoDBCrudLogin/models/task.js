@@ -70,9 +70,10 @@ TaskSchema.methods.insert= async function () {
 };
 
 //Cambiado a lo que nos dijo Mario de Promises
+//Faltaba el segundo parametro del updateOne (la task con los atributos actualizados)
 TaskSchema.methods.update= async (id, task) => {
   const Task = mongoose.model("tasks", TaskSchema);
-  await Task.updateOne({_id: id})
+  await Task.updateOne({_id: id},task)
     .then(result => console.log(result))
   .catch(error => console.log(error));
 };
