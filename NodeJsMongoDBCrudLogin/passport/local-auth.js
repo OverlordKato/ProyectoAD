@@ -25,7 +25,7 @@ passport.use('local-signup', new LocalStrategy({
     const newUser = new User();
     newUser.email = email;
     newUser.password = newUser.encryptPassword(password);
-    newUser.rol = req.body.rol;
+    newUser.rol = req.body.rol; //Obtención del rol a través del body
     await newUser.insert();
     done(null, newUser);
   }
