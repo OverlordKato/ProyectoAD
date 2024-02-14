@@ -12,13 +12,6 @@ require('./passport/local-auth');
 var tasksRouter = require('./routes/tasks');
 var usersRouter = require('./routes/users');
 
-//Conexión con la base de datos
-const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/?retryWrites=true&w=majority',
-  { useNewUrlParser: true, useUnifiedTopology: true }
-).then(db => console.log('db connected'))
-  .catch(err => console.log(err));
-
 // view engine setup
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));

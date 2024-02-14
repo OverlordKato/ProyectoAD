@@ -5,7 +5,13 @@
         <form action="/signup" method="POST">
           <input type="email" name="email" placeholder="Email">
           <input type="password" name="password" placeholder="Password">
-          <input type="rol" name="rol" placeholder="Rol"> <!--Añadido el campo para introducir el rol-->
+          <!--Añadido el campo para introducir el rol-->
+          <!--Cambiado a un dropdown-->
+          <select name="rol">
+            <option value="administrador">Administrador</option>
+            <option value="profesor">Profesor</option>
+            <option value="alumno">Alumno</option>
+          </select>
           <button class="btn btn-primary" type="submit">
             SignUp
           </button>
