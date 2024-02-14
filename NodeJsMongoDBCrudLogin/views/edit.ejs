@@ -1,28 +1,78 @@
 <% include partials/_header %>
-
 <div class="container">
   <div class="row">
-    <!--FORM-->
     <div class="col-md-5 offset-md-3">
       <div class="card">
         <div class="card-body">
           <form action="/tasks/edit/<%= task._id %>" method="post">
             <div class="form-group">
-              <input class="form-control" type="text" name="title" placeholder="Title" value="<%= task.title %>">
+              <label for="nombre">Nombre:</label>
+              <input class="form-control" type="text" name="nombre" placeholder="Nombre" value="<%= task.nombre %>">
             </div>
             <div class="form-group">
-              <textarea class="form-control" name="description" cols="80"
-                placeholder="Add a Description"
-                ><%= task.description %></textarea>
+              <label for="planEstudios">Plan de Estudios:</label>
+              <input class="form-control" name="planEstudios" id="planEstudios" placeholder="Plan de Estudios" value="<%= task.planEstudios %>" required>
             </div>
-            <button class="btn btn-primary" type="submit">
-              Update 
-            </button>
+            <div class="form-group">
+              <label for="cuatrimestre">Cuatrimestre:</label>
+              <input class="form-control" type="text" name="cuatrimestre" id="cuatrimestre" placeholder="Cuatrimestre" value="<%= task.cuatrimestre %>" required>
+            </div>
+            <div class="form-group">
+              <label for="curso">Curso:</label>
+              <input class="form-control" type="text" name="curso" id="curso" placeholder="Curso" value="<%= task.curso %>" required>
+            </div>
+            <!--Una separación y un apartado para software-->
+            <hr> 
+            <h5>Software Relacionado:</h5>
+            <!--Muestra la lista de software asociados-->
+            <div class="form-group">
+              <div id="selected-software"></div>
+              <label for="softwares">Selecciona un Software:</label>
+              <select class="form-control" name="softwares" id="softwares">
+                <option value="" disabled selected hidden>Opciones...</option> <!--Opción por defecto no seleccionable-->
+                <% for(var i=0; i < softwares.length; i++) { %>
+                  <option value="<%= softwares[i].url %>"><%= softwares[i].url %></option>
+                <% }; %>
+              </select>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <% include partials/_footer%>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const select = document.getElementById('softwares');
+    const selectedSoftwareDiv = document.getElementById('selected-software');
+    const selectedSoftwareSet = new Set();//Set para almacenar los valores de las opciones seleccionadas sin que se repitan
+
+    select.addEventListener('change', function() {
+      const selectedOption = select.options[select.selectedIndex];
+      const selectedSoftwareUrl = selectedOption.value;
+      const selectedSoftwareText = selectedOption.text;
+      
+      //Verificar si la opción ya está seleccionada antes de agregarla
+      if (!selectedSoftwareSet.has(selectedSoftwareUrl)) {
+        const optionElement = document.createElement('div');
+        optionElement.innerHTML = `
+          <span><strong>${selectedSoftwareText}</strong></span>
+          <button type="button" class="btn btn-sm btn-danger" onclick="removeSelectedSoftware(this)">Eliminar</button>
+          <input type="hidden" name="selectedSoftwareUrls[]" value="${selectedSoftwareUrl}">
+        `;
+        optionElement.classList.add('new-software-group');//Agrega la clase al nuevo elemento
+        selectedSoftwareDiv.appendChild(optionElement);
+        selectedSoftwareSet.add(selectedSoftwareUrl);//Agrega el valor al conjunto de opciones seleccionadas, pero si se eliminó antes no permite volver a meterlo
+      }
+    });
+  });
+
+  function removeSelectedSoftware(button) {
+    button.closest('.new-software-group').remove();
+    const selectedSoftwareUrlInput = button.parentElement.querySelector('input[type="hidden"]');
+    const selectedSoftwareUrl = selectedSoftwareUrlInput.value;
+    selectedSoftwareSet.delete(selectedSoftwareUrl);//Elimina el valor del conjunto de opciones seleccionadas
+  }
+</script>
