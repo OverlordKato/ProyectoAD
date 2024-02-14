@@ -18,13 +18,14 @@ passport.use('local-signup', new LocalStrategy({
   passReqToCallback: true
 }, async (req, email, password, done) => {
   var user = new User();
-   user = await user.findEmail( email)
-  if(user) {
+  user = await user.findEmail(email)
+  if (user) {
     return done(null, false, req.flash('signupMessage', 'The Email is already Taken.'));
   } else {
     const newUser = new User();
     newUser.email = email;
     newUser.password = newUser.encryptPassword(password);
+    newUser.rol = req.body.rol; //Añadido del rol cogiendo el valor del formulario de signup
     await newUser.insert();
     done(null, newUser);
   }
@@ -36,11 +37,11 @@ passport.use('local-signin', new LocalStrategy({
   passReqToCallback: true
 }, async (req, email, password, done) => {
   var user = new User();
-   user = await user.findEmail( email);
-  if(!user) {
+  user = await user.findEmail(email);
+  if (!user) {
     return done(null, false, req.flash('signinMessage', 'No User Found'));
   }
-  if(!user.comparePassword(password)) {
+  if (!user.comparePassword(password)) {
     return done(null, false, req.flash('signinMessage', 'Incorrect Password'));
   }
   return done(null, user);
