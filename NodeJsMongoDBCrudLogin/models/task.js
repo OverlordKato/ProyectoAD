@@ -36,14 +36,10 @@ const TaskSchema = Schema({
     type: String,
     required: true
   },
-  //Esto parece lo más viable para meter un array de softwares de momento, aunque sea para hacer pruebas
-  software: {
-    type: [{
-      url: {type: String},
-      descripcion: {type: String}
-    }],
-    required: false
-  },
+  software: [
+    {type: mongoose.Schema.Types.ObjectId, ref: 'software'}
+    //Por defecto, el required es false, pero podemos especificarlo tal que ->   required: false
+  ],
   usuario: [
     {type: mongoose.Schema.Types.ObjectId, ref:'user'}
   ]
@@ -74,7 +70,7 @@ TaskSchema.methods.insert= async function () {
 TaskSchema.methods.update= async (id, task) => {
   const Task = mongoose.model("tasks", TaskSchema);
   await Task.updateOne({_id: id},task)
-    .then(result => console.log(result))
+  .then(result => console.log(result))
   .catch(error => console.log(error));
 };
 

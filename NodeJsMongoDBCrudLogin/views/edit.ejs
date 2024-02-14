@@ -25,26 +25,16 @@
             <hr> 
             <h5>Software Relacionado:</h5>
             <!--Muestra la lista de software asociados-->
-            <% task.software.forEach(function(software) { %>
-              <div class="form-group">
-                <input class="form-control" type="text" name="software_url" placeholder="URL" value="<%= software.url %>">
-              </div>
-              <div class="form-group">
-                <input class="form-control" type="text" name="software_descripcion" placeholder="Descripción" value="<%= software.descripcion %>">
-              </div>
-            <% }); %>
-            <!--Apartado para meter un software nuevo-->
-            <div id="new-software">
-              <div class="new-software-group">
-                <input class="form-control" type="text" name="nuevo_software_url[]" placeholder="Nueva URL">
-                <input class="form-control" type="text" name="nuevo_software_descripcion[]" placeholder="Nueva Descripción">
-                <!--Botón que se muestra después de cada apartado de software nuevo, permite eliminar el apartado-->
-                <button type="button" class="btn btn-danger" onclick="removeNewSoftware(this)">Eliminar</button>
-              </div>
+            <div class="form-group">
+              <div id="selected-software"></div>
+              <label for="softwares">Selecciona un Software:</label>
+              <select class="form-control" name="softwares" id="softwares">
+                <option value="" disabled selected hidden>Opciones...</option> <!--Opción por defecto no seleccionable-->
+                <% for(var i=0; i < softwares.length; i++) { %>
+                  <option value="<%= softwares[i].url %>"><%= softwares[i].url %></option>
+                <% }; %>
+              </select>
             </div>
-            <!--Botón que se muestra después del de borrar, permite meter un apartado nuevo de software, así podemos llenar el array sin tener que volver al menú edit todo el rato-->
-            <button class="btn btn-primary" type="button" onclick="addNewSoftware()">Agregar Nuevo Software</button>
-            <button class="btn btn-primary" type="submit">Actualizar</button>
           </form>
         </div>
       </div>
@@ -53,25 +43,36 @@
 </div>
 <% include partials/_footer%>
 
-<!--Script para las funciones de poner un apartado nuevo, y de quitar apartados-->
 <script>
-  function addNewSoftware() {
-    const newSoftwareDiv = document.getElementById('new-software');
-    const newSoftwareGroup = document.createElement('div');
-    newSoftwareGroup.classList.add('new-software-group');
-    newSoftwareGroup.innerHTML = `
-      <div class="form-group">
-        <input class="form-control" type="text" name="nuevo_software_url[]" placeholder="Nueva URL">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="nuevo_software_descripcion[]" placeholder="Nueva Descripción">
-      </div>
-      <button type="button" class="btn btn-danger" onclick="removeNewSoftware(this)">Eliminar</button>
-    `;
-    newSoftwareDiv.appendChild(newSoftwareGroup);
-  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const select = document.getElementById('softwares');
+    const selectedSoftwareDiv = document.getElementById('selected-software');
+    const selectedSoftwareSet = new Set();//Set para almacenar los valores de las opciones seleccionadas sin que se repitan
 
-  function removeNewSoftware(button) {
+    select.addEventListener('change', function() {
+      const selectedOption = select.options[select.selectedIndex];
+      const selectedSoftwareUrl = selectedOption.value;
+      const selectedSoftwareText = selectedOption.text;
+      
+      //Verificar si la opción ya está seleccionada antes de agregarla
+      if (!selectedSoftwareSet.has(selectedSoftwareUrl)) {
+        const optionElement = document.createElement('div');
+        optionElement.innerHTML = `
+          <span><strong>${selectedSoftwareText}</strong></span>
+          <button type="button" class="btn btn-sm btn-danger" onclick="removeSelectedSoftware(this)">Eliminar</button>
+          <input type="hidden" name="selectedSoftwareUrls[]" value="${selectedSoftwareUrl}">
+        `;
+        optionElement.classList.add('new-software-group');//Agrega la clase al nuevo elemento
+        selectedSoftwareDiv.appendChild(optionElement);
+        selectedSoftwareSet.add(selectedSoftwareUrl);//Agrega el valor al conjunto de opciones seleccionadas, pero si se eliminó antes no permite volver a meterlo
+      }
+    });
+  });
+
+  function removeSelectedSoftware(button) {
     button.closest('.new-software-group').remove();
+    const selectedSoftwareUrlInput = button.parentElement.querySelector('input[type="hidden"]');
+    const selectedSoftwareUrl = selectedSoftwareUrlInput.value;
+    selectedSoftwareSet.delete(selectedSoftwareUrl);//Elimina el valor del conjunto de opciones seleccionadas
   }
 </script>
