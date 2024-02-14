@@ -41,7 +41,8 @@
               <td><%= i + 1%></td>
               <td>
                 <strong>
-                  <a href="<%= softwares[i].url.slice(0, 20) %>"><%= softwares[i].url.slice(0, 20) %><% if (softwares[i].url.length > 20) { %>...<% } %></a>
+                  <!-- Enlace corregido para que redirija fuera del localhost -->
+                  <a target="_blank" href="<%= "http://" + softwares[i].url %>"><%= softwares[i].url.slice(0, 20) %><% if (softwares[i].url.length > 20) { %>...<% } %></a>
                 </strong>
               </td>
               <td><%= softwares[i].descripcion %></td>
