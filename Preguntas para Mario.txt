@@ -32,7 +32,7 @@ Respuestas Varias
 - Para cada usuario la vista cambia, se gestiona con ifs con la condición del rol del usuario
 - Si queremos una base de datos con un nombre diferente, debe ponerse en el enlace con /elnombrequequeremos en app.js. 
     Ejemplo: mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/fff?retryWrites=true&w=majority  -> fff sería el nombre de la base de datos usada
-
+    
 
 Tablas:
 
