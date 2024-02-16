@@ -38,4 +38,36 @@ userSchema.methods.insert = async function () {
     console.log("saved: " + res);
   });
 };
+
+//Añadido el metodo de findAll que devuelve una lista de usuarios
+userSchema.methods.findAll = async function () {
+  const User = mongoose.model("user", userSchema);
+  return await User.find();
+};
+
+//Añadido el metodo de delete, que borra un usuario usando su id
+userSchema.methods.delete = async function (id) {
+  const User = mongoose.model("user", userSchema);
+  await User.deleteOne({ _id: id }, err => {
+    if (err) console.log(err);
+  });
+  console.log(id + " deleted");
+
+};
+
+//Añadido el metodo de findById, que devuelve un usuario segun su id
+userSchema.methods.findById = async function (id) {
+  const User = mongoose.model("user", userSchema);
+  return await User.findById(id);
+};
+
+//Añadido el metodo de update, que actualiza un usuario usando su id
+userSchema.methods.update = async (id, user) => {
+  const User = mongoose.model("user", userSchema);
+  await User.updateOne({ _id: id }, user, err => {
+    if (err) console.log(err);
+  });
+  console.log(id + " updated");
+};
+
 module.exports = mongoose.model('user', userSchema);

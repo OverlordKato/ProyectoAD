@@ -1,0 +1,89 @@
+<% include partials/_header %>
+    <div class="container">
+        <div class="row">
+            <!--Formulario-->
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-body">
+
+                        <form action="/users/add" method="POST">
+
+                            <div class="form-group">
+
+                                <input type="email" name="email" placeholder="Email">
+
+                                <input type="password" name="password" placeholder="Password">
+
+                                <!--Campo (tipo dropdown) para introducir el rol-->
+                                <select name="rol">
+                                    <option value="administrador">Administrador</option>
+                                    <option value="profesor">Profesor</option>
+                                    <option value="alumno">Alumno</option>
+                                </select>
+
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Añadir usuario</button>
+
+                        </form>
+
+                        <!--Mensaje de error al intentar añadir usuario-->
+                        <%if (signupMessage) {%>
+                            <p style="color:#FF0000;">
+                                <%= signupMessage %>
+                            </p>
+                            <% } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--Lista-->
+            <div class="col-md-7">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+
+                            <th>Correo</th>
+
+                            <th>Rol</th>
+
+                            <th>Operaciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% for(var i=0; i < users.length; i++) { %>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <%= users[i].email %>
+                                    </strong>
+                                </td>
+
+                                <!--
+                                <td>
+                                    <%= users[i].password %>
+                                </td>
+                                -->
+
+                                <td>
+                                    <%= users[i].rol %>
+                                </td>
+
+                                <td>
+                                    <a href="/users/delete/<%= users[i]._id %>" class="btn btn-danger">Delete</a>
+                                    <a href="/users/edit/<%= users[i]._id %>" class="btn btn-info">Edit</a>
+                                </td>
+
+                            </tr>
+                            <% } %>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <% include partials/_footer %>
