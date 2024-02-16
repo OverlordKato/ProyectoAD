@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const SoftwareSchema = new Schema({
+  nombre: {
+    type: String,
+    required: true
+  },
   url: {
     type: String,
     required: true
@@ -10,7 +14,9 @@ const SoftwareSchema = new Schema({
   descripcion: {
     type: String,
     required: true
-  }
+  },
+  task:
+    {type: mongoose.Schema.Types.ObjectId, ref:'task'}
 });
 
 SoftwareSchema.methods.findAll= async function () {

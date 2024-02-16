@@ -36,10 +36,6 @@ const TaskSchema = Schema({
     type: String,
     required: true
   },
-  software: [
-    {type: mongoose.Schema.Types.ObjectId, ref: 'software'}
-    //Por defecto, el required es false, pero podemos especificarlo tal que ->   required: false
-  ],
   usuario: [
     {type: mongoose.Schema.Types.ObjectId, ref:'user'}
   ]
