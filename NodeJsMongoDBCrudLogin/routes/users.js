@@ -6,8 +6,6 @@ router.get('/', (req, res, next) => {
   res.render('index');
 });
 
-//El boton de signup del inicio y la pagina de signup, se deberían quitar, ya que los usuarios se van a crear en /users, usando el post de /users/add
-
 router.get('/signin', (req, res, next) => {
   res.render('signin');
 });
