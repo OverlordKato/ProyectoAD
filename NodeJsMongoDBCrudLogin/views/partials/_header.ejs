@@ -31,15 +31,25 @@
           <a class="nav-link" href="/signup">Signup</a>
         </li>
         <% } else { %>
-        <li class="nav-item active">
-          <a class="nav-link" href="/tasks">Tareas <span class="sr-only">(current)</span></a>
-        </li>
+          <!--Acceder al perfil del usuario -->
         <li class="nav-item">
-          <a class="nav-link" href="/profile">Perfil <%=user.email%></a>
+          <a class="nav-link" href="/profile">Usuario <%=user.email%></a>
+        </li>
+        <!--Acceder a la vista general de asignaturas. Solo opción de vista-->
+        <li class="nav-item active">
+          <a class="nav-link" href="/tasks">Aula Virtual<span class="sr-only">(current)</span></a>
+        </li>
+        <!-- Acceder a la vista de Asignaturas con opciones CRUD de editar datos. CRUD de Software COMPLETO-->
+        <li class="nav-item active">
+          <a class="nav-link" href="/tasks-edit">Panel de Asignaturas<span class="sr-only">(current)</span></a>
+        </li>
+        <!-- Acceder a la vista de Asignaturas con opciones CRUD completas, tanto en Asignaturas como en Software-->
+        <li class="nav-item active">
+          <a class="nav-link" href="/tasks-edit">Panel de Asignaturas<span class="sr-only">(current)</span></a>
         </li>
         <!--Elemento nuevo de la lista que enlaza a la página de softwares-->
         <li class="nav-item">
-          <a class="nav-link" href="/softwares">Softwares</a>
+          <a class="nav-link" href="/softwares">Asignaturas</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
