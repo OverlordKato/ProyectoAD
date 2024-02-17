@@ -1,0 +1,36 @@
+<!--Muestra las tareas del usuario que está logged in-->
+<% include partials/_header %>
+<div class="container">
+  <div class="row justify-content-left mt-4">
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Nombre</th>
+            <th>Plan de Estudios</th>
+            <th>Cuatrimestre</th>
+            <th>Curso</th>
+            <th>Operaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i=0; i < tasks.length; i++) { %>
+            <tr>
+              <td><%= i + 1 %></td>
+              <td><strong><%= tasks[i].nombre %></strong></td>
+              <td><%= tasks[i].planEstudios %></td>
+              <td><%= tasks[i].cuatrimestre %></td>
+              <td><%= tasks[i].curso %></td>
+              <td>
+                <a href="/tasks/delete/<%= tasks[i]._id %>" class="btn btn-danger">Eliminar</a>
+                <a href="/tasks/edit/<%= tasks[i]._id %>" class="btn btn-info">Editar</a>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<% include partials/_footer %>

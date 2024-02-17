@@ -2,7 +2,19 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/task');
 const Software = require('../models/software');//const para sacar el modelo de software
+const User = require('../models/user');//const para sacar el modelo de user
 
+//Nueva ruta para acceder al panel de control, pasandole todos los usuarios y todas las tareas
+router.get('/ControlPanel', isAuthenticated, async (req, res) => {
+  const user = new User();
+  const task = new Task();
+  const users = await user.findAll();
+  const tasks = await task.findAll();
+  res.render('controlPanel', {
+    users,
+    tasks
+  });
+});
 
 router.get('/tasks',isAuthenticated, async (req, res) => {
   const task = new Task();
@@ -13,6 +25,13 @@ router.get('/tasks',isAuthenticated, async (req, res) => {
   });
 });
 
+//Ruta para acceder a los tasks del usuario logged in
+router.get('/tasks/user/:userId', isAuthenticated, async (req, res) => {
+  const task = new Task();
+  const tasks = await task.findAllUser(req.params.userId);
+  res.render('userTasks', { tasks });
+});
+
 router.post('/tasks/add', isAuthenticated,async (req, res, next) => {
   const task = new Task(req.body);
   //No parecen necesarias las siguientes tres líneas, pero por si da error ya que creamos asignaturas sin software asignado
@@ -21,7 +40,7 @@ router.post('/tasks/add', isAuthenticated,async (req, res, next) => {
   // }
   //Quitado lo siguiente de esta línea, que asocia una tarea a un usuario ->   task.usuario=req.user._id;
   await task.insert();
-  res.redirect('/tasks');
+  res.redirect('/controlPanel');
 });
 
 router.get('/tasks/turn/:id',isAuthenticated, async (req, res, next) => {
@@ -52,7 +71,7 @@ router.get('/tasks/delete/:id', isAuthenticated,async (req, res, next) => {
   const task = new Task();
   let { id } = req.params;
   await task.delete(id);
-  res.redirect('/tasks');
+  res.redirect('/controlPanel');
 });
 
 router.get('/tasks/search',isAuthenticated, async (req, res, next) => {

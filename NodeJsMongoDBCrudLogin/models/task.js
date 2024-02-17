@@ -48,10 +48,10 @@ TaskSchema.methods.findAll= async function () {
   return await Task.find();
 };
 
-//Cambiado el nombre del método para evitar conflictos
-TaskSchema.methods.findAllUser= async function (usuario) {
+//Cambiado el nombre del método para evitar conflictos, busca tareas en función del usuario
+TaskSchema.methods.findAllUser = async function (userId) {
   const Task = mongoose.model("tasks", TaskSchema);
-  return await Task.find({'usuario':usuario});
+  return await Task.find({ 'usuario': userId });
 };
 
 //Cambiado a lo que nos dijo Mario de Promises
