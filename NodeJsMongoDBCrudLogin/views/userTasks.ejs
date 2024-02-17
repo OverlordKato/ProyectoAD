@@ -6,12 +6,14 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>N°</th>
-            <th>Nombre</th>
-            <th>Plan de Estudios</th>
+            <th>Item</th>
+            <th>Asignatura</th>
+            <!-- Se eliminan los elementos de detalles de esta pantalla.-->
+            <!--<th>Plan de Estudios</th>
             <th>Cuatrimestre</th>
             <th>Curso</th>
-            <th>Operaciones</th>
+            <th>Operaciones</th>-->
+            <th>Opciones de usuario</th>
           </tr>
         </thead>
         <tbody>
@@ -19,12 +21,16 @@
             <tr>
               <td><%= i + 1 %></td>
               <td><strong><%= tasks[i].nombre %></strong></td>
-              <td><%= tasks[i].planEstudios %></td>
+              <!-- Se eliminan los elementos de detalles de esta pantalla.-->
+              <!--<td><%= tasks[i].planEstudios %></td>
               <td><%= tasks[i].cuatrimestre %></td>
-              <td><%= tasks[i].curso %></td>
+              <td><%= tasks[i].curso %></td>-->
               <td>
-                <a href="/tasks/delete/<%= tasks[i]._id %>" class="btn btn-danger">Eliminar</a>
-                <a href="/tasks/edit/<%= tasks[i]._id %>" class="btn btn-info">Editar</a>
+                <!-- Se eliminan los botones de modificación-->
+                <!--<a href="/tasks/delete/<%= tasks[i]._id %>" class="btn btn-danger">Eliminar</a>
+                <a href="/tasks/edit/<%= tasks[i]._id %>" class="btn btn-info">Editar</a>-->
+                <!-- Introducido un botoón para acceder a los detalles de la asignatura-->
+                <a href="/tasks/edit/<%= tasks[i]._id %>" class="btn btn-primary">Acceder</a>
               </td>
             </tr>
           <% } %>
