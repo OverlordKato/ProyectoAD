@@ -56,22 +56,18 @@
             <% if (task.usuario && task.usuario.length > 0) { %>
             <ul>
               <% task.usuario.forEach(function(user) { %>
-                <!--Estilos aplicados al ListItem para que se vea mejor-->
-                <li class="d-flex justify-content-between user-item">
-                  <span><%= user.email %></span>
-                  <span><button href="/tasks/<%= task._id %>/removeUser" class="btn btn-danger" type="button">Eliminar</button></span>
-                </li>
+              <li class="d-flex justify-content-between user-item">
+                <span><%= user.email %></span>
+                <form action="/tasks/<%= task._id %>/removeUser" method="post">
+                  <input type="hidden" name="userId" value="<%= user._id %>">
+                  <button class="btn btn-danger" type="submit">Eliminar</button>
+                </form>
+              </li>
               <% }); %>
             </ul>
             <% } else { %>
             <p>No hay usuarios asociados a esta tarea.</p>
             <% } %>
-          </div>
-          <!-- Botones adicionales -->
-          <hr />
-          <div class="form-group">
-            <button class="btn btn-success" type="button">Boton 1</button>
-            <button class="btn btn-warning" type="button">Boton 2</button>
           </div>
         </div>
       </div>
@@ -80,8 +76,8 @@
           <div class="card">
             <div class="card-body">
               <h5>Asociar usuarios a esta tarea:</h5>
-              <form action="/tasks/<%= task._id %>/addUser" method="post">
-                <select name="userId">
+              <form action="/tasks/<%= task._id %>/addUser" method="post" class="d-flex justify-content-between">
+                <select name="userId" class="flex-grow-1 mr-2">
                   <% users.forEach(function(user) { %>
                     <option value="<%= user._id %>"><%= user.email %></option>
                   <% }); %>
