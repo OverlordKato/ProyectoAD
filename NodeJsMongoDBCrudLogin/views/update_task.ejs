@@ -1,0 +1,52 @@
+<% include partials/_header %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5>Asignatura:</h5>
+          <!-- Información de la tarea -->
+          <p><strong>Nombre:</strong> <%= task.nombre %></p>
+          <p><strong>Plan de Estudios:</strong> <%= task.planEstudios %></p>
+          <p><strong>Cuatrimestre:</strong> <%= task.cuatrimestre %></p>
+          <p><strong>Curso:</strong> <%= task.curso %></p>
+          <!-- Botones adicionales -->
+          <hr />
+          <div class="form-group">
+            <button class="btn btn-success" type="button">Boton 1</button>
+            <button class="btn btn-warning" type="button">Boton 2</button>
+          </div>
+          <!-- Información del software asociado -->
+          <hr />
+          <h5>Software Relacionado:</h5>
+          <div class="form-group">
+            <% if (software) { %>
+            <div>
+              <p>
+                <strong>Nombre del software:</strong> <%= software.nombre %>
+              </p>
+              <!-- Nombre del software -->
+              <p><strong>URL del software:</strong> <%= software.url %></p>
+              <!-- URL del software -->
+              <p>
+                <strong>Descripción del software:</strong> <%=
+                software.descripcion %>
+              </p>
+              <!-- Descripción del software -->
+            </div>
+            <% } else { %>
+            <p>No se encontró software asociado a esta tarea.</p>
+            <% } %>
+          </div>
+          <!-- Botones adicionales -->
+          <hr />
+          <div class="form-group">
+            <button class="btn btn-success" type="button">Boton 1</button>
+            <button class="btn btn-warning" type="button">Boton 2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% include partials/_footer %>

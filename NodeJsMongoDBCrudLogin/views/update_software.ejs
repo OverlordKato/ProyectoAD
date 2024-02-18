@@ -1,0 +1,32 @@
+<% include partials/_header %> <!-- Incluye un archivo de cabecera parcial -->
+
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h3>Editar Software</h3>
+          <!-- Formulario para editar el software -->
+          <form action="/softwares/update/<%= software._id %>" method="post"> <!-- Modificado el action para apuntar a /softwares/update/:id -->
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<%= software.nombre %>" required>
+            </div>
+            <div class="form-group">
+              <label for="url">URL:</label>
+              <input class="form-control" type="text" name="url" id="url" placeholder="URL" value="<%= software.url %>" required>
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Descripción:</label>
+              <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Descripción" style="height: 100px;" maxlength="150" required><%= software.descripcion %></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% include partials/_footer %> <!-- Incluye un archivo de pie de página parcial -->

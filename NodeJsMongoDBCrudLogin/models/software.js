@@ -38,5 +38,11 @@ SoftwareSchema.methods.delete= async function (id) {
     console.log(id + " deleted");
 };
 
+/*Métodos nuevos*/
+SoftwareSchema.statics.findById = async function (id) {
+  const Software = mongoose.model("softwares", SoftwareSchema);
+  return await Software.findOne({_id: id});
+};  
+
 //Revisar este export, es necesario crear otra ruta? O basta con la de tasks?
 module.exports = mongoose.model('softwares', SoftwareSchema);

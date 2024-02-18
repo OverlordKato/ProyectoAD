@@ -91,4 +91,20 @@ function isAuthenticated(req, res, next) {
 
   res.redirect('/')
 }
+
+//Método para el botón ver.
+router.get('/tasks/update_task/:id', isAuthenticated, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const task = await Task.findById(id); // Encuentra la tarea por su ID
+    // Encuentra el software que tiene asignada esta tarea
+    const software = await Software.findOne({ task: id }); // Buscar el software con la tarea asociada
+    console.log('Software encontrado: ' + software);
+    res.render('update_task', { task, software });
+  } catch (error) {
+    console.error('Error al obtener la tarea para actualizar:', error);
+    res.redirect('/tasks'); // En caso de error, redirigir a la lista de tareas
+  }
+});
+
 module.exports = router;
