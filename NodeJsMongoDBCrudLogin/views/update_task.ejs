@@ -46,11 +46,21 @@
           <!-- Lista de usuarios -->
           <hr />
           <h5>Usuarios Asociados:</h5>
+          <!--Un estilo para evitar que los botones de eliminar usuario se coman los unos a los otros.-->
+          <style>
+            .user-item{
+              margin-bottom: 5px;
+            }
+          </style>
           <div class="form-group">
             <% if (task.usuario && task.usuario.length > 0) { %>
             <ul>
               <% task.usuario.forEach(function(user) { %>
-                <li><button href="/tasks/<%= task._id %>/removeUser" class="btn btn-danger" type="button">Eliminar</button> <%= user.email %></li>
+                <!--Estilos aplicados al ListItem para que se vea mejor-->
+                <li class="d-flex justify-content-between user-item">
+                  <span><%= user.email %></span>
+                  <span><button href="/tasks/<%= task._id %>/removeUser" class="btn btn-danger" type="button">Eliminar</button></span>
+                </li>
               <% }); %>
             </ul>
             <% } else { %>
