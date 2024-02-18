@@ -44,7 +44,7 @@
         <% } else if(user.rol == "profesor") { %>
         <!-- Acceder a la vista de Asignaturas con opciones CRUD de editar datos. CRUD de Software COMPLETO-->
         <li class="nav-item active">
-          <a class="nav-link" href="/softwares">Administrar Asignaturas<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/tasks/user/<%= user._id %>">Administrar Asignaturas<span class="sr-only">(current)</span></a>
         </li>
         <% } else if(user.rol == "administrador") { %>
         <!-- Acceder a la vista de Asignaturas con opciones CRUD completas, tanto en Asignaturas como en Software-->

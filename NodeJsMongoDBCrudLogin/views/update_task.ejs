@@ -14,7 +14,6 @@
           <hr />
           <div class="form-group">
             <button class="btn btn-info" type="button">Editar Asignatura</button>
-            <button class="btn btn-danger" type="button">Eliminar Asignatura</button>
           </div>
           <!-- Información del software asociado -->
           <hr />
@@ -44,6 +43,7 @@
             <button class="btn btn-danger" type="button">Eliminar Software</button>
           </div>
           <!-- Lista de usuarios -->
+          <% if(user.rol == "administrador") {%><!--Para que solo el admin pueda ver la lista de usuarios y quitar/poner nuevos-->
           <hr />
           <h5>Usuarios Asociados:</h5>
           <!--Un estilo para evitar que los botones de eliminar usuario se coman los unos a los otros.-->
@@ -88,6 +88,7 @@
           </div>    
         </div>
       </div>
+      <% }; %>
     </div>
   </div>
 </div>  
