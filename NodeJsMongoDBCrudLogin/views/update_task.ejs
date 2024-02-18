@@ -1,5 +1,5 @@
 <% include partials/_header %>
-<div class="container">
+<div class="container" style="margin-bottom: 100px;">
   <div class="row">
     <div class="col-md-5 offset-md-3">
       <div class="card">
@@ -75,23 +75,24 @@
           </div>
         </div>
       </div>
+      <div class="row justify-content-center mt-4">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h5>Asociar usuarios a esta tarea:</h5>
+              <form action="/tasks/<%= task._id %>/addUser" method="post">
+                <select name="userId">
+                  <% users.forEach(function(user) { %>
+                    <option value="<%= user._id %>"><%= user.email %></option>
+                  <% }); %>
+                </select>
+                <button class="btn btn-success" type="submit">Asociar usuario</button>
+              </form>
+            </div>  
+          </div>    
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="row justify-content-center mt-4">
-    <div class="col-md-5 offset-md-3">
-      <div class="card">
-        <div class="card-body">
-          <form action="/tasks/<%= task._id %>/addUser" method="post">
-            <select name="userId">
-              <% users.forEach(function(user) { %>
-                <option value="<%= user._id %>"><%= user.email %></option>
-              <% }); %>
-            </select>
-            <button class="btn btn-success" type="submit">Agregar usuario</button>
-          </form>
-      </div>    
-    </div>
-  </div>
-</div>
+</div>  
 <% include partials/_footer %>
