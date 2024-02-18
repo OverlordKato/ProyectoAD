@@ -126,9 +126,7 @@ router.post('/tasks/:id/addUser', isAuthenticated, async (req, res) => {
   const { id } = req.params;
   const userId = req.body.userId;
   const task = await Task.findById(id);
-  // Convertir el array de ObjectId a un array de strings
-  const usuarios = task.usuario.map(id => id.toString());
-  if (usuarios.indexOf(userId) === -1) {
+  if (!task.usuario.includes(userId)) {
     task.usuario.push(userId);
     await task.save();
   }
