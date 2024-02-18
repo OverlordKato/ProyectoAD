@@ -50,7 +50,7 @@
             <% if (task.usuario && task.usuario.length > 0) { %>
             <ul>
               <% task.usuario.forEach(function(user) { %>
-                <li><button class="btn btn-danger" type="button">Eliminar</button> <%= user.email %></li>
+                <li><button href="/tasks/<%= task._id %>/removeUser" class="btn btn-danger" type="button">Eliminar</button> <%= user.email %></li>
               <% }); %>
             </ul>
             <% } else { %>

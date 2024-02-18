@@ -107,4 +107,17 @@ router.get('/tasks/update_task/:id', isAuthenticated, async (req, res) => {
   }
 });
 
+//Método que debería permitir eliminar el id de un usuario del array de usuarios de una task
+router.post('/tasks/:id/removeUser', isAuthenticated, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.body.userId;
+  const task = await Task.findById(id);
+  const index = task.usuario.indexOf(userId);
+  if (index > -1) {
+    task.usuario.splice(index, 1);
+    await task.save();
+  }
+  res.redirect('/tasks/update_task/' + id);
+});
+
 module.exports = router;
