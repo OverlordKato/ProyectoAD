@@ -96,7 +96,7 @@ function isAuthenticated(req, res, next) {
 router.get('/tasks/update_task/:id', isAuthenticated, async (req, res) => {
   try {
     const { id } = req.params;
-    const task = await Task.findById(id); // Encuentra la tarea por su ID
+    const task = await Task.findById(id).populate('usuario'); // Encuentra la tarea por su ID y llena los datos de usuario
     // Encuentra el software que tiene asignada esta tarea
     const software = await Software.findOne({ task: id }); // Buscar el software con la tarea asociada
     console.log('Software encontrado: ' + software);
