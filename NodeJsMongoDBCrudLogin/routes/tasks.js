@@ -99,8 +99,9 @@ router.get('/tasks/update_task/:id', isAuthenticated, async (req, res) => {
     const task = await Task.findById(id).populate('usuario'); // Encuentra la tarea por su ID y llena los datos de usuario
     // Encuentra el software que tiene asignada esta tarea
     const software = await Software.findOne({ task: id }); // Buscar el software con la tarea asociada
+    const users = await User.find({});
     console.log('Software encontrado: ' + software);
-    res.render('update_task', { task, software });
+    res.render('update_task', { task, software, users });
   } catch (error) {
     console.error('Error al obtener la tarea para actualizar:', error);
     res.redirect('/tasks'); // En caso de error, redirigir a la lista de tareas
@@ -115,6 +116,20 @@ router.post('/tasks/:id/removeUser', isAuthenticated, async (req, res) => {
   const index = task.usuario.indexOf(userId);
   if (index > -1) {
     task.usuario.splice(index, 1);
+    await task.save();
+  }
+  res.redirect('/tasks/update_task/' + id);
+});
+
+//Método que debería permitir agregar usuarios a una task
+router.post('/tasks/:id/addUser', isAuthenticated, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.body.userId;
+  const task = await Task.findById(id);
+  // Convertir el array de ObjectId a un array de strings
+  const usuarios = task.usuario.map(id => id.toString());
+  if (usuarios.indexOf(userId) === -1) {
+    task.usuario.push(userId);
     await task.save();
   }
   res.redirect('/tasks/update_task/' + id);
