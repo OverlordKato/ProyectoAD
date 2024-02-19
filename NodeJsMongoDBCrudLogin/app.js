@@ -7,18 +7,20 @@ const session = require('express-session');
 const passport = require('passport');
 const logger = require('morgan');
 var app = express();
-require('./database');
+//require('./database');
+
 require('./passport/local-auth');
 var tasksRouter = require('./routes/tasks');
 var usersRouter = require('./routes/users');
+var softwaresRouter = require('./routes/softwares');//Necesario para que pueda acceder a la ruta nueva de softwares
 
 //Conexión con la base de datos
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/?retryWrites=true&w=majority',
+//Para cambiar de base de datos, añadir el nombre de la misma después del .net/
+mongoose.connect('mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/ProyectoNode_FinalTest?retryWrites=true&w=majority',
   { useNewUrlParser: true, useUnifiedTopology: true }
 ).then(db => console.log('db connected'))
   .catch(err => console.log(err));
-
 // view engine setup
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -51,6 +53,7 @@ app.use((req, res, next) => {
 //routes
 app.use('/', usersRouter);
 app.use('/', tasksRouter);
+app.use('/', softwaresRouter);//Necesario para que pueda acceder a la ruta nueva de softwares
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

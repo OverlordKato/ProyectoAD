@@ -1,0 +1,134 @@
+<% include partials/_header %>
+<div class="container" style="margin-bottom: 100px;">
+  <div class="row">
+    <div class="col-md-5 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5>Asignatura:</h5>
+          <!-- Información de la asignatura -->
+          <p><strong>Nombre:</strong> <%= task.nombre %></p>
+          <p><strong>Plan de Estudios:</strong> <%= task.planEstudios %></p>
+          <p><strong>Cuatrimestre:</strong> <%= task.cuatrimestre %></p>
+          <p><strong>Curso:</strong> <%= task.curso %></p>
+          <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
+          <!-- Botones adicionales -->
+          <hr />
+          <div class="form-group">
+            <a href="/tasks/edit/<%= task._id %>" class="btn btn-primary">Actualizar</a>
+          </div>
+          <% } %>
+          <!-- Información del software asociado -->
+          <hr />
+          <h5>Softwares Relacionados:</h5>
+          <div class="form-group">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Nombre del software</th>
+                  <th>URL</th>
+                  <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
+                  <th>Operaciones</th>
+                  <% } %>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (softwares.length > 0) { %>
+                  <% for(var i=0; i < softwares.length; i++) { %>
+                    <tr>
+                      <td><%= softwares[i].nombre %></td>
+                      <td><a target="_blank" href="<%= "http://" + softwares[i].url %>"><%= softwares[i].url.slice(0, 20) %><% if (softwares[i].url.length > 20) { %>...<% } %></a>
+                      </td>
+                      <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
+                      <td>
+                        <a href="/softwares/update/<%= softwares[i]._id %>" class="btn btn-primary">Actualizar</a>
+                        <a href="/softwares/delete/<%= softwares[i]._id %>" class="btn btn-danger">Eliminar</a>
+                      </td>
+                      <% } %>
+                    </tr>
+                  <% } %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="2">No se encontraron softwares asociados a esta tarea.</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+          <!-- Lista de usuarios -->
+          <% if(user.rol == "administrador") {%><!--Para que solo el admin pueda ver la lista de usuarios y quitar/poner nuevos-->
+          <hr />
+          <h5>Usuarios Asociados:</h5>
+          <!--Un estilo para evitar que los botones de eliminar usuario se coman los unos a los otros.-->
+          <style>
+            .user-item{
+              margin-bottom: 5px;
+            }
+          </style>
+          <div class="form-group">
+            <% if (task.usuario && task.usuario.length > 0) { %>
+            <ul>
+              <% task.usuario.forEach(function(user) { %>
+              <li class="d-flex justify-content-between user-item">
+                <span><%= user.nombre %> <%= user.apellidos %></span>
+                <form action="/tasks/<%= task._id %>/removeUser" method="post">
+                  <input type="hidden" name="userId" value="<%= user._id %>">
+                  <button class="btn btn-danger" type="submit">Eliminar</button>
+                </form>
+              </li>
+              <% }); %>
+            </ul>
+            <% } else { %>
+            <p>No hay usuarios asociados a esta tarea.</p>
+            <% } %>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <h5>Asociar usuarios a esta asignatura:</h5>
+                <form action="/tasks/<%= task._id %>/addUser" method="post" class="d-flex justify-content-between">
+                  <select name="userId" class="flex-grow-1 mr-2">
+                    <% users.forEach(function(user) { %>
+                      <% if (user.rol != "administrador") { %>
+                        <option value="<%= user._id %>"><%= user.nombre %> <%= user.apellidos %></option>
+                      <% } %>
+                    <% }); %>
+                  </select>
+                  <button class="btn btn-success" type="submit">Asociar usuario</button>
+                </form>
+              </div>  
+            </div>    
+          </div>
+        </div>
+        <% }; %>
+        <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
+        <div class="row justify-content-center mt-5">
+          <div class="card">
+            <div class="card-body">
+              <form action="/softwares/add/<%= task._id %>" method="post">
+                <div class="form-group">
+                  <h5>Nuevo Software</h5>
+                  <br>
+                  <label for="nombre">Nombre:</label>
+                  <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+                </div>
+                <div class="form-group">
+                  <label for="url">URL:</label>
+                  <input class="form-control" type="text" name="url" id="url" placeholder="URL" required>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripción:</label>
+                  <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Descripción" style="height: 100px;" maxlength="150" required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Agregar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }; %>
+      </div>
+    </div>
+  </div>
+</div>  
+<% include partials/_footer %>

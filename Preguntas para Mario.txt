@@ -5,16 +5,23 @@ Adri
     -
 
 Abraham
-    - "__v 0" esta linea en MongoDBCompass, a que hace referencia.
+    - "__v 0" esta linea en MongoDBCompass, a que hace referencia. 
+            (CONTESTADA) Básicamente, que no nos preocupemos por ello
 
 
 Arthur
     - A qué se refiere el ejercicio cuando pone que una Asignatura tiene que soportar enlaces externos (URLs)? 
       Debe poder hacerse click a la asignatura y que lleve a un sitio web en concreto?
-    - Para las personas, alumnos y profesores, basta con que tengan un email y contraseña, o deben tener nombre, lista de asignaturas, etc? 
-    - Recomiendas que las asignaturas tengan listas de alumnos y de profesores, o que cada alumno y profesor tenga su propia lista de asignaturas?   
-    - Es necesario incluir un diagrama para este proyecto? Tendría que ser de clases, de las pantallas del proyecto, otro?
+            (CONTESTADA) Un Array de enlaces a páginas cualesquiera.
 
+    - Para las personas, alumnos y profesores, basta con que tengan un email y contraseña, o deben tener nombre, lista de asignaturas, etc? 
+            (CONTESTADA) Ver las tablas abajo
+
+    - Recomiendas que las asignaturas tengan listas de alumnos y de profesores, o que cada alumno y profesor tenga su propia lista de asignaturas?   
+            (CONTESTADA) Usuarios con listas de asignaturas, o crear una tabla intermedia (relación muchos a muchos)
+
+    - Es necesario incluir un diagrama para este proyecto? Tendría que ser de clases, de las pantallas del proyecto, otro?
+            (CONTESTADA) No es necesario un diagrama
 
 Respuestas Varias
 
@@ -23,7 +30,6 @@ Respuestas Varias
 - Solo necesitamos la direccion del servidor dentro del app.js
 - Al agregar una asignatura, la interfaz se parecerá a la de añadir task
 - Para cada usuario la vista cambia, se gestiona con ifs con la condición del rol del usuario
-- No necesitamos un diagrama para este proyecto
 - Si queremos una base de datos con un nombre diferente, debe ponerse en el enlace con /elnombrequequeremos en app.js. 
     Ejemplo: mongodb+srv://ellie:1234@cluster0.goxma4m.mongodb.net/fff?retryWrites=true&w=majority  -> fff sería el nombre de la base de datos usada
     
@@ -45,5 +51,5 @@ Usuario
     -rol
     -email
     -contraseña
-    Asignaturas["...", "...", "..."]  -> Array de Asignaturas, aunque también podemos crear una tabla aparte para hacer una relación de muchos a muchos
+    -Asignaturas["...", "...", "..."]  -> Array de Asignaturas, aunque también podemos crear una tabla aparte para hacer una relación de muchos a muchos
 

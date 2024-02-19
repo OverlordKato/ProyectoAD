@@ -1,0 +1,15 @@
+Deberíamos fragmentar el trabajo para entender cada parte del mismo, por ello planteo que trabajemos los apartados por separado usando el ejemplo de Mario, es decir:
+    - Probar asignatura (task), sin que software sea un requerimiento, ni añadirlo, (esto ya está hecho en su branch correspondiente)
+      - Pantalla para añadir
+      - Pantalla para editar
+    - Probar usuario (user), sin añadir roles, que tenga acceso a todo igual que lo tendrá el admin, así simplemente quitaremos opciones poco a poco 
+      después para que corresponda a profesor y a alumno.
+      - Pantalla de sign up (con los atributos correspondientes, de nuevo sin roles)
+      - Pantalla de sign in (redirige al perfil, con los datos correspondientes)
+      - Pantalla de perfil
+
+Recomendaría que todos lo hiciéramos todo, al menos de momento, para ir entendiendo y ayudándonos si nos atascamos, que si no en el examen nos quedamos tupperware
+
+Añadid o quitad según veáis adecuado
+      
+    

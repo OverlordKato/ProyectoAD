@@ -1,0 +1,37 @@
+<% include partials/_header %>
+  <div class="container">
+    <div class="row">
+      <!--Formulario-->
+      <div class="col-md-5 offset-md-3">
+        <div class="card">
+          <div class="card-body">
+            <form action="/users/edit/<%= user._id %>" method="post">
+
+              <div class="form-group">
+                <input class="form-control" type="text" name="nombre" placeholder="Nombre" value="<%= user.nombre %>">
+              </div>
+
+              <div class="form-group">
+                <input class="form-control" type="text" name="apellidos" placeholder="Apellidos" value="<%= user.apellidos %>">
+              </div>
+              
+              <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="Email" value="<%= user.email %>">
+              </div>
+
+              <!--Campo (tipo dropdown) para introducir el rol-->
+              <div class="form-group">
+                <select name="rol">
+                  <option value="administrador">Administrador</option>
+                  <option value="profesor">Profesor</option>
+                  <option value="alumno">Alumno</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" type="submit">Actualizar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% include partials/_footer%>
