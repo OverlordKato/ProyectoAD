@@ -56,9 +56,13 @@ router.get('/users/delete/:id', isAuthenticated, async (req, res, next) => {
 
 //Añadida la rutas edit (get)
 router.get('/users/edit/:id', isAuthenticated, async (req, res, next) => {
+  if(req.user.rol=="administrador"){
   var user = new User();
   user = await user.findById(req.params.id);
   res.render('userEdit', { user });
+}else{
+  res.redirect('/');
+}
 });
 
 //Añadida la rutas edit (post)

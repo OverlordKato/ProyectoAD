@@ -20,14 +20,15 @@ router.get('/ControlPanel', isAuthenticated, async (req, res) => {
 }
 });
 
-router.get('/tasks',isAuthenticated, async (req, res) => {
-  const task = new Task();
-  const tasks = await task.findAll();
-  console.log(tasks);
-  res.render('tasks', {
-    tasks
-  });
-});
+//Ruta obsoleta
+// router.get('/tasks',isAuthenticated, async (req, res) => {
+//   const task = new Task();
+//   const tasks = await task.findAll();
+//   console.log(tasks);
+//   res.render('tasks', {
+//     tasks
+//   });
+// });
 
 //Ruta para acceder a los tasks del usuario logged in
 router.get('/tasks/user/:userId', isAuthenticated, async (req, res) => {
@@ -73,10 +74,14 @@ router.get('/tasks/turn/:id',isAuthenticated, async (req, res, next) => {
 
 //Route - Tasks
 router.get('/tasks/edit/:id', isAuthenticated, async (req, res, next) => {
+  if(req.user.rol=="administrador" || req.user.rol=="profesor"){
   var task = new Task();
   var softwares = new Software();
   task = await task.findById(req.params.id);
   res.render('edit_task', { task, softwares });
+}else{
+  res.redirect('/');
+}
 });
 
 router.post('/tasks/edit/:id',isAuthenticated, async (req, res, next) => {
