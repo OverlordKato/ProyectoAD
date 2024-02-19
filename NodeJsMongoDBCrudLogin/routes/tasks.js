@@ -6,6 +6,7 @@ const User = require('../models/user');//const para sacar el modelo de user
 
 //Nueva ruta para acceder al panel de control, pasandole todos los usuarios y todas las tareas
 router.get('/ControlPanel', isAuthenticated, async (req, res) => {
+  if(req.user.rol=="administrador"){
   const user = new User();
   const task = new Task();
   const users = await user.findAll();
@@ -14,6 +15,9 @@ router.get('/ControlPanel', isAuthenticated, async (req, res) => {
     users,
     tasks
   });
+}else{
+  res.redirect('/');
+}
 });
 
 router.get('/tasks',isAuthenticated, async (req, res) => {

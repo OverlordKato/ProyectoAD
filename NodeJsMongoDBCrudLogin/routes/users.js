@@ -35,11 +35,15 @@ router.post('/users/add', passport.authenticate('local-signup', {
 
 //Añadida la ruta /users
 router.get('/users', isAuthenticated, async (req, res) => {
+  if(req.user.rol=="administrador"){
   const user = new User();
   const users = await user.findAll();
   res.render('users', {
     users
   });
+}else{
+  res.redirect('/');
+}
 });
 
 //Añadida la ruta /users/delete/:id
