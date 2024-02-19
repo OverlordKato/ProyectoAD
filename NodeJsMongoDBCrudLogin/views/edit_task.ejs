@@ -1,18 +1,19 @@
-<!--VISTA OBSOLETA-->
 <% include partials/_header %>
 <div class="container">
-  <div class="row">
-    <div class="col-md-5 offset-md-3">
+  <div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
       <div class="card">
         <div class="card-body">
-          <form action="/tasks/edit/<%= task._id %>" method="post">
+          <h3>Editar Tarea</h3>
+          <!-- Formulario para editar la tarea -->
+          <form action="/tasks/edit/<%= task._id %>" method="post"> <!-- Modificado el action para apuntar a /tasks/edit/:id -->
             <div class="form-group">
               <label for="nombre">Nombre:</label>
-              <input class="form-control" type="text" name="nombre" placeholder="Nombre" value="<%= task.nombre %>">
+              <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<%= task.nombre %>" required>
             </div>
             <div class="form-group">
-              <label for="planEstudios">Plan de Estudios:</label>
-              <input class="form-control" name="planEstudios" id="planEstudios" placeholder="Plan de Estudios" value="<%= task.planEstudios %>" required>
+              <label for="planEstudios">Plan de estudios:</label>
+              <input class="form-control" type="text" name="planEstudios" id="planEstudios" placeholder="Plan de estudios" value="<%= task.planEstudios %>" required>
             </div>
             <div class="form-group">
               <label for="cuatrimestre">Cuatrimestre:</label>
@@ -22,14 +23,11 @@
               <label for="curso">Curso:</label>
               <input class="form-control" type="text" name="curso" id="curso" placeholder="Curso" value="<%= task.curso %>" required>
             </div>
-            <!--Una separación y un apartado para software-->
-            <hr> 
-            <h5>Software Relacionado:</h5>
-            <!--Muestra la lista de software asociados-->
+            <button class="btn btn-primary" type="submit">Guardar Cambios</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
-<% include partials/_footer%>
+<% include partials/_footer %>

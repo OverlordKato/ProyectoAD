@@ -15,7 +15,7 @@
     <!-- NAVIGATION -->
   
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-    <a class="navbar-brand" href="/">Sesión y CRUD Nodejs Y Mongodb</a>
+    <a class="navbar-brand" href="/">Práctica None.js y Expresso (v0.1)</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" 
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
             aria-expanded="false" aria-label="Toggle navigation">
@@ -27,20 +27,42 @@
         <li class="nav-item active">
           <a class="nav-link" href="/signin">Signin <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
+        <!-- Quitada la opción de Singup, dado que solo los administradores pueden agregar usuarios nuevos-->
+        <!--<li class="nav-item">
           <a class="nav-link" href="/signup">Signup</a>
-        </li>
+        </li>-->
         <% } else { %>
-        <li class="nav-item active">
-          <a class="nav-link" href="/tasks">Tareas <span class="sr-only">(current)</span></a>
-        </li>
+          <!--Acceder al perfil del usuario -->
         <li class="nav-item">
-          <a class="nav-link" href="/profile">Perfil <%=user.email%></a>
+          <a class="nav-link" href="/profile">Usuario <%=user.email%></a>
         </li>
-        <li class="nav-item dropdown">
+        <% if (user.rol == "alumno") { %>
+        <!--Acceder a la vista general de asignaturas. Solo opción de vista-->
+        <li class="nav-item active">
+          <a class="nav-link" href="/tasks/user/<%= user._id %>">Aula Virtual<span class="sr-only">(current)</span></a>
+        </li>
+        <% } else if(user.rol == "profesor") { %>
+        <!-- Acceder a la vista de Asignaturas con opciones CRUD de editar datos. CRUD de Software COMPLETO-->
+        <li class="nav-item active">
+          <a class="nav-link" href="/tasks/user/<%= user._id %>">Administrar Asignaturas<span class="sr-only">(current)</span></a>
+        </li>
+        <% } else if(user.rol == "administrador") { %>
+        <!-- Acceder a la vista de Asignaturas con opciones CRUD completas, tanto en Asignaturas como en Software-->
+        <!--Enlace retocado-->
+        <li class="nav-item active">
+          <a class="nav-link" href="/controlPanel">Panel de Control<span class="sr-only">(current)</span></a>
+        </li>
+        <% } %>
+        <!-- Sobra el Asignaturas del usuario en todos los menús
+        <li class="nav-item active">
+          <a class="nav-link" href="/tasks/user/<%= user._id %>">Asignaturas del usuario<span class="sr-only">(current)</span></a>
+        </li>
+        -->
+        <!-- El dropdown se quita de manera provisional-->
+        <!--<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
+            Acceso Rápido
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Action</a>
@@ -48,18 +70,20 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
-        </li>
+        </li>-->
         <li class="nav-item">
           <a class="nav-link disabled" href="/logout">Log out</a>
         </li>
         <% } %>
       </ul>
+      <!--Sobra el Search
       <% if (user) { %>
       <form action="/tasks/search" class="form-inline my-2 my-lg-0 text-center"  method="get">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
         <button class="btn btn-outline-light my-2 my-sm-0 mx-auto " type="submit">Buscar</button>
       </form>
       <% } %>
+      -->
 
     </div>
   </nav>

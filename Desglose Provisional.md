@@ -1,5 +1,3 @@
-<!-- Para tachar una frase hay encapsular esa frase entre "~~"-->
-<!-- Para poner una cruz en una tarea, hay que colocar una "x" dentro de los "[ ]", "[x]"-->
 
 # Desglose del programa:
 
