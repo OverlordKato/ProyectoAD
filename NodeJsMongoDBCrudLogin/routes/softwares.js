@@ -38,12 +38,16 @@ router.post('/softwares/add/:id', isAuthenticated, async (req, res) => {
 });
 
 router.get('/softwares/delete/:id', isAuthenticated,async (req, res, next) => {
+    if(req.user.rol=="administrador" || req.user.rol=="profesor"){
     let { id } = req.params;
     const software = await Software.findById(id);
     const taskId = software.task;
     console.log("id del task" + taskId);
     await software.delete(id);
     res.redirect(`/tasks/update_task/${taskId}`);
+}else{
+    res.redirect('/');
+  }
 });
 
 function isAuthenticated(req, res, next) {

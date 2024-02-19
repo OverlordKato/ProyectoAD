@@ -92,10 +92,14 @@ router.post('/tasks/edit/:id',isAuthenticated, async (req, res, next) => {
 });
 
 router.get('/tasks/delete/:id', isAuthenticated,async (req, res, next) => {
+  if(req.user.rol=="administrador"){
   const task = new Task();
   let { id } = req.params;
   await task.delete(id);
   res.redirect('/controlPanel');
+}else{
+  res.redirect('/');
+}
 });
 
 router.get('/tasks/search',isAuthenticated, async (req, res, next) => {

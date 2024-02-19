@@ -48,10 +48,14 @@ router.get('/users', isAuthenticated, async (req, res) => {
 
 //Añadida la ruta /users/delete/:id
 router.get('/users/delete/:id', isAuthenticated, async (req, res, next) => {
+  if(req.user.rol=="administrador"){
   const user = new User();
   let { id } = req.params;
   await user.delete(id);
   res.redirect('/controlPanel');
+}else{
+  res.redirect('/');
+}
 });
 
 //Añadida la rutas edit (get)
