@@ -23,6 +23,8 @@ passport.use('local-signup', new LocalStrategy({
     return done(null, false, req.flash('signupMessage', 'Este correo ya está registrado')); //Traducido a español
   } else {
     const newUser = new User();
+    newUser.nombre = req.body.nombre; //Añadido del rol cogiendo el valor del formulario de signup
+    newUser.apellidos = req.body.apellidos; //Añadido del rol cogiendo el valor del formulario de signup
     newUser.email = email;
     newUser.password = newUser.encryptPassword(password);
     newUser.rol = req.body.rol; //Añadido del rol cogiendo el valor del formulario de signup
