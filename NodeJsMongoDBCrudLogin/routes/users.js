@@ -35,26 +35,38 @@ router.post('/users/add', passport.authenticate('local-signup', {
 
 //Añadida la ruta /users
 router.get('/users', isAuthenticated, async (req, res) => {
+  if(req.user.rol=="administrador"){
   const user = new User();
   const users = await user.findAll();
   res.render('users', {
     users
   });
+}else{
+  res.redirect('/');
+}
 });
 
 //Añadida la ruta /users/delete/:id
 router.get('/users/delete/:id', isAuthenticated, async (req, res, next) => {
+  if(req.user.rol=="administrador"){
   const user = new User();
   let { id } = req.params;
   await user.delete(id);
   res.redirect('/controlPanel');
+}else{
+  res.redirect('/');
+}
 });
 
 //Añadida la rutas edit (get)
 router.get('/users/edit/:id', isAuthenticated, async (req, res, next) => {
+  if(req.user.rol=="administrador"){
   var user = new User();
   user = await user.findById(req.params.id);
   res.render('userEdit', { user });
+}else{
+  res.redirect('/');
+}
 });
 
 //Añadida la rutas edit (post)

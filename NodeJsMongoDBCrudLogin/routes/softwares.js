@@ -3,14 +3,15 @@ const express = require('express');
 const router = express.Router();
 const Software = require('../models/software');
 
-router.get('/softwares',isAuthenticated, async (req, res) => {
-    const software = new Software();
-    const softwares = await software.findAll();
-    console.log(softwares);
-    res.render('softwares', {
-        softwares
-    });
-});
+// Ruta obsoleta
+// router.get('/softwares',isAuthenticated, async (req, res) => {
+//     const software = new Software();
+//     const softwares = await software.findAll();
+//     console.log(softwares);
+//     res.render('softwares', {
+//         softwares
+//     });
+// });
 
 router.post('/softwares/add/:id', isAuthenticated, async (req, res) => {
     try {
@@ -37,12 +38,16 @@ router.post('/softwares/add/:id', isAuthenticated, async (req, res) => {
 });
 
 router.get('/softwares/delete/:id', isAuthenticated,async (req, res, next) => {
+    if(req.user.rol=="administrador" || req.user.rol=="profesor"){
     let { id } = req.params;
     const software = await Software.findById(id);
     const taskId = software.task;
     console.log("id del task" + taskId);
     await software.delete(id);
     res.redirect(`/tasks/update_task/${taskId}`);
+}else{
+    res.redirect('/');
+  }
 });
 
 function isAuthenticated(req, res, next) {
@@ -55,6 +60,7 @@ function isAuthenticated(req, res, next) {
 /*Métodos nuevos*/
 // GET para obtener el formulario de actualización de un software
 router.get('/softwares/update/:id', isAuthenticated, async (req, res) => {
+    if(req.user.rol=="administrador" || req.user.rol=="profesor"){
     try {
         // Obtener el ID del software de la URL
         const { id } = req.params;
@@ -66,6 +72,9 @@ router.get('/softwares/update/:id', isAuthenticated, async (req, res) => {
         console.error('Error al obtener el formulario de actualización de software:', error);
         res.redirect(`/tasks/update_task/${taskId}`); // Redirigir a la lista de software en caso de error
     }
+}else{
+    res.redirect('/');
+  }
 });
 /*Métodos nuevos*/
 // POST para procesar la actualización de un software

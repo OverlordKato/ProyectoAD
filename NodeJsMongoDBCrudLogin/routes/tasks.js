@@ -6,6 +6,7 @@ const User = require('../models/user');//const para sacar el modelo de user
 
 //Nueva ruta para acceder al panel de control, pasandole todos los usuarios y todas las tareas
 router.get('/ControlPanel', isAuthenticated, async (req, res) => {
+  if(req.user.rol=="administrador"){
   const user = new User();
   const task = new Task();
   const users = await user.findAll();
@@ -14,16 +15,20 @@ router.get('/ControlPanel', isAuthenticated, async (req, res) => {
     users,
     tasks
   });
+}else{
+  res.redirect('/');
+}
 });
 
-router.get('/tasks',isAuthenticated, async (req, res) => {
-  const task = new Task();
-  const tasks = await task.findAll();
-  console.log(tasks);
-  res.render('tasks', {
-    tasks
-  });
-});
+//Ruta obsoleta
+// router.get('/tasks',isAuthenticated, async (req, res) => {
+//   const task = new Task();
+//   const tasks = await task.findAll();
+//   console.log(tasks);
+//   res.render('tasks', {
+//     tasks
+//   });
+// });
 
 //Ruta para acceder a los tasks del usuario logged in
 router.get('/tasks/user/:userId', isAuthenticated, async (req, res) => {
@@ -69,10 +74,14 @@ router.get('/tasks/turn/:id',isAuthenticated, async (req, res, next) => {
 
 //Route - Tasks
 router.get('/tasks/edit/:id', isAuthenticated, async (req, res, next) => {
+  if(req.user.rol=="administrador" || req.user.rol=="profesor"){
   var task = new Task();
   var softwares = new Software();
   task = await task.findById(req.params.id);
   res.render('edit_task', { task, softwares });
+}else{
+  res.redirect('/');
+}
 });
 
 router.post('/tasks/edit/:id',isAuthenticated, async (req, res, next) => {
@@ -83,10 +92,14 @@ router.post('/tasks/edit/:id',isAuthenticated, async (req, res, next) => {
 });
 
 router.get('/tasks/delete/:id', isAuthenticated,async (req, res, next) => {
+  if(req.user.rol=="administrador"){
   const task = new Task();
   let { id } = req.params;
   await task.delete(id);
   res.redirect('/controlPanel');
+}else{
+  res.redirect('/');
+}
 });
 
 router.get('/tasks/search',isAuthenticated, async (req, res, next) => {
