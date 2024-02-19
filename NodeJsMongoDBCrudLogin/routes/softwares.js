@@ -12,17 +12,37 @@ router.get('/softwares',isAuthenticated, async (req, res) => {
     });
 });
 
-router.post('/softwares/add', isAuthenticated,async (req, res, next) => {
-    const software = new Software(req.body);
-    await software.insert();
-    res.redirect('/softwares');
+router.post('/softwares/add/:id', isAuthenticated, async (req, res) => {
+    try {
+        // Obtener el ID de la tarea desde los parámetros de la URL
+        const taskId = req.params.id;
+
+        // Crear una nueva instancia del modelo Software con los datos del formulario
+        const newSoftware = new Software({
+            nombre: req.body.nombre,
+            url: req.body.url,
+            descripcion: req.body.descripcion,
+            task: taskId
+        });
+
+        // Guardar el nuevo software en la base de datos
+        await newSoftware.save();
+
+        // Redirigir a la lista de software después de agregar con un mensaje de éxito
+        res.redirect(`/tasks/update_task/${taskId}`);
+    } catch (error) {
+        console.error('Error al agregar el nuevo software:', error);
+        res.redirect(`/tasks/update_task/${taskId}`);
+    }
 });
 
 router.get('/softwares/delete/:id', isAuthenticated,async (req, res, next) => {
-    const software = new Software();
     let { id } = req.params;
+    const software = await Software.findById(id);
+    const taskId = software.task;
+    console.log("id del task" + taskId);
     await software.delete(id);
-    res.redirect('/softwares');
+    res.redirect(`/tasks/update_task/${taskId}`);
 });
 
 function isAuthenticated(req, res, next) {
@@ -44,7 +64,7 @@ router.get('/softwares/update/:id', isAuthenticated, async (req, res) => {
         res.render('update_software', { software });
     } catch (error) {
         console.error('Error al obtener el formulario de actualización de software:', error);
-        res.redirect('/softwares'); // Redirigir a la lista de software en caso de error
+        res.redirect(`/tasks/update_task/${taskId}`); // Redirigir a la lista de software en caso de error
     }
 });
 /*Métodos nuevos*/
@@ -55,17 +75,23 @@ router.post('/softwares/update/:id', isAuthenticated, async (req, res) => {
         const { id } = req.params;
         // Buscar el software por su ID en la base de datos
         const software = await Software.findById(id);
+
+        // Obtener el ID de la tarea asociada al software
+        const taskId = software.task._id;
+
         // Actualizar los campos del software con los nuevos datos del formulario
         software.nombre = req.body.nombre; // Aquí actualizamos el nombre del software
         software.url = req.body.url;
         software.descripcion = req.body.descripcion;
+
         // Guardar los cambios en la base de datos
         await software.save();
+
         // Redirigir a la lista de software después de la actualización con un mensaje de éxito
-        res.redirect('/softwares');
+        res.redirect(`/tasks/update_task/${taskId}`);
     } catch (error) {
         console.error('Error al actualizar el software:', error);
-        res.redirect('/softwares'); // Redirigir a la lista de software en caso de error
+        res.redirect(`/tasks/update_task/${taskId}`); // Redirigir a la lista de software en caso de error
     }
 });
 

@@ -10,37 +10,46 @@
           <p><strong>Plan de Estudios:</strong> <%= task.planEstudios %></p>
           <p><strong>Cuatrimestre:</strong> <%= task.cuatrimestre %></p>
           <p><strong>Curso:</strong> <%= task.curso %></p>
+          <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
           <!-- Botones adicionales -->
           <hr />
           <div class="form-group">
-            <button class="btn btn-info" type="button">Editar Asignatura</button>
+            <a href="/tasks/edit/<%= task._id %>" class="btn btn-primary">Actualizar</a>
           </div>
+          <% } %>
           <!-- Información del software asociado -->
           <hr />
-          <h5>Software Relacionado:</h5>
+          <h5>Softwares Relacionados:</h5>
           <div class="form-group">
-            <% if (software) { %>
-            <div>
-              <p>
-                <strong>Nombre del software:</strong> <%= software.nombre %>
-              </p>
-              <!-- Nombre del software -->
-              <p><strong>URL del software:</strong> <%= software.url %></p>
-              <!-- URL del software -->
-              <p>
-                <strong>Descripción del software:</strong> <%= software.descripcion %>
-              </p>
-              <!-- Descripción del software -->
-            </div>
-            <% } else { %>
-            <p>No se encontró software asociado a esta tarea.</p>
-            <% } %>
-          </div>
-          <!-- Botones adicionales -->
-          <hr />
-          <div class="form-group">
-            <button class="btn btn-info" type="button">Editar Software</button>
-            <button class="btn btn-danger" type="button">Eliminar Software</button>
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Nombre del software</th>
+                  <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
+                  <th>Operaciones</th>
+                  <% } %>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (softwares.length > 0) { %>
+                  <% for(var i=0; i < softwares.length; i++) { %>
+                    <tr>
+                      <td><%= softwares[i].nombre %></td>
+                      <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
+                      <td>
+                        <a href="/softwares/update/<%= softwares[i]._id %>" class="btn btn-primary">Actualizar</a>
+                        <a href="/softwares/delete/<%= softwares[i]._id %>" class="btn btn-danger">Eliminar</a>
+                      </td>
+                      <% } %>
+                    </tr>
+                  <% } %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="2">No se encontraron softwares asociados a esta tarea.</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
           </div>
           <!-- Lista de usuarios -->
           <% if(user.rol == "administrador") {%><!--Para que solo el admin pueda ver la lista de usuarios y quitar/poner nuevos-->
@@ -70,25 +79,50 @@
             <% } %>
           </div>
         </div>
-      </div>
-      <div class="row justify-content-center mt-4">
-        <div class="col-md-12">
+        <div class="row justify-content-center mt-4">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <h5>Asociar usuarios a esta tarea:</h5>
+                <form action="/tasks/<%= task._id %>/addUser" method="post" class="d-flex justify-content-between">
+                  <select name="userId" class="flex-grow-1 mr-2">
+                    <% users.forEach(function(user) { %>
+                      <option value="<%= user._id %>"><%= user.email %></option>
+                    <% }); %>
+                  </select>
+                  <button class="btn btn-success" type="submit">Asociar usuario</button>
+                </form>
+              </div>  
+            </div>    
+          </div>
+        </div>
+        <% }; %>
+        <% if(user.rol == "administrador" || user.rol == "profesor") {%><!--Solo lo ven admins y profesores-->
+        <div class="row justify-content-center mt-5">
           <div class="card">
             <div class="card-body">
-              <h5>Asociar usuarios a esta tarea:</h5>
-              <form action="/tasks/<%= task._id %>/addUser" method="post" class="d-flex justify-content-between">
-                <select name="userId" class="flex-grow-1 mr-2">
-                  <% users.forEach(function(user) { %>
-                    <option value="<%= user._id %>"><%= user.email %></option>
-                  <% }); %>
-                </select>
-                <button class="btn btn-success" type="submit">Asociar usuario</button>
+              <form action="/softwares/add/<%= task._id %>" method="post">
+                <div class="form-group">
+                  <h5>Nuevo Software</h5>
+                  <br>
+                  <label for="nombre">Nombre:</label>
+                  <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+                </div>
+                <div class="form-group">
+                  <label for="url">URL:</label>
+                  <input class="form-control" type="text" name="url" id="url" placeholder="URL" required>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripción:</label>
+                  <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Descripción" style="height: 100px;" maxlength="150" required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Agregar</button>
               </form>
-            </div>  
-          </div>    
+            </div>
+          </div>
         </div>
+        <% }; %>
       </div>
-      <% }; %>
     </div>
   </div>
 </div>  

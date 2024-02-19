@@ -5,9 +5,7 @@
       <div class="col-md-5 offset-md-3">
         <div class="card">
           <div class="card-body">
-
             <form action="/users/edit/<%= user._id %>" method="post">
-
               <div class="form-group">
                 <input class="form-control" type="email" name="email" placeholder="Email" value="<%= user.email %>">
               </div>
@@ -26,11 +24,8 @@
                   <option value="alumno">Alumno</option>
                 </select>
               </div>
-
               <button class="btn btn-primary" type="submit">Actualizar</button>
-
             </form>
-
           </div>
         </div>
       </div>
