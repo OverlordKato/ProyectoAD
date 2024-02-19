@@ -1,0 +1,24 @@
+Aquí se apuntan conclusiones que se sacan al mirar el código de Mario. Sed lo más descriptivos posibles.
+
+Adri
+  -
+
+Abraham
+  -
+
+Ellie
+  -Carpeta "passport"
+    -local-auth.js
+      -"local-signin" y "local-signup" (lineas 15-31 y 33-47, respectivamente)
+        -Son usados en las rutas de "signin" y "signup" de users.js
+        -Se encargan de mandar los mensajes de error que luego recogen las pantallas de signin y signup
+        -Por lo que he visto parecen métodos de un módulo específico para inicios de sesión con usuario y contraseña.
+        -He conseguido que coja el rol del formulario usando req.body.rol (lo que me imagino que coge el elemento "rol"
+        del body)
+
+Arthur
+  - Si cambiamos los atributos en los modelos task.js o user.js, hay que tener en cuenta que los campos correspondientes a esos atributos 
+    también están en las vistas correspondientes, tasks.ejs (name en líneas 12 y 15) y signup.ejs/signin.ejs (name en líneas 6 y 7), 
+    y esos name se deben cambiar, por ejemplo para las asignaturas, de title (que correspondía a task) a nombre (que corresponde a signatura). 
+    También tendremos que añadir más campos en general, ya que trabajamos con más atributos.
+  - 
