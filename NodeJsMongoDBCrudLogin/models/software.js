@@ -19,6 +19,7 @@ const SoftwareSchema = new Schema({
     {type: mongoose.Schema.Types.ObjectId, ref:'task'}
 });
 
+//Henlo
 SoftwareSchema.methods.findAll= async function () {
     const Software = mongoose.model("softwares", SoftwareSchema);
     return await Software.find();
