@@ -20,14 +20,14 @@ passport.use('local-signup', new LocalStrategy({
   var user = new User();
   user = await user.findEmail(email)
   if (user) {
-    return done(null, false, req.flash('signupMessage', 'The Email is already Taken.'));
+    return done(null, false, req.flash('signupMessage', 'Este correo ya está registrado')); //Traducido a español
   } else {
     const newUser = new User();
     newUser.email = email;
     newUser.password = newUser.encryptPassword(password);
     newUser.rol = req.body.rol; //Añadido del rol cogiendo el valor del formulario de signup
     await newUser.insert();
-    done(null, newUser);
+    done(null); //Quitado el usuario como parametro para que la sesión actual no se convierta en la del usuario nuevo
   }
 }));
 
@@ -38,11 +38,8 @@ passport.use('local-signin', new LocalStrategy({
 }, async (req, email, password, done) => {
   var user = new User();
   user = await user.findEmail(email);
-  if (!user) {
-    return done(null, false, req.flash('signinMessage', 'No User Found'));
-  }
-  if (!user.comparePassword(password)) {
-    return done(null, false, req.flash('signinMessage', 'Incorrect Password'));
+  if (!user || !user.comparePassword(password)) {
+    return done(null, false, req.flash('signinMessage', 'Correo o contraseña incorrectos')); //Juntado de ambos errores (contraseña incorrecta y usuario no existente) en un solo mensaje de error
   }
   return done(null, user);
 }));
