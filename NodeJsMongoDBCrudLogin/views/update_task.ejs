@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-body">
           <h5>Asignatura:</h5>
-          <!-- Información de la tarea -->
+          <!-- Información de la asignatura -->
           <p><strong>Nombre:</strong> <%= task.nombre %></p>
           <p><strong>Plan de Estudios:</strong> <%= task.planEstudios %></p>
           <p><strong>Cuatrimestre:</strong> <%= task.cuatrimestre %></p>
@@ -69,7 +69,7 @@
             <ul>
               <% task.usuario.forEach(function(user) { %>
               <li class="d-flex justify-content-between user-item">
-                <span><%= user.email %></span>
+                <span><%= user.nombre %> <%= user.apellidos %></span>
                 <form action="/tasks/<%= task._id %>/removeUser" method="post">
                   <input type="hidden" name="userId" value="<%= user._id %>">
                   <button class="btn btn-danger" type="submit">Eliminar</button>
@@ -86,11 +86,13 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
-                <h5>Asociar usuarios a esta tarea:</h5>
+                <h5>Asociar usuarios a esta asignatura:</h5>
                 <form action="/tasks/<%= task._id %>/addUser" method="post" class="d-flex justify-content-between">
                   <select name="userId" class="flex-grow-1 mr-2">
                     <% users.forEach(function(user) { %>
-                      <option value="<%= user._id %>"><%= user.email %></option>
+                      <% if (user.rol != "administrador") { %>
+                        <option value="<%= user._id %>"><%= user.nombre %> <%= user.apellidos %></option>
+                      <% } %>
                     <% }); %>
                   </select>
                   <button class="btn btn-success" type="submit">Asociar usuario</button>
