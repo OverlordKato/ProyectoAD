@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt-nodejs');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+  nombre: { type: String, required: true },
+  apellidos: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
   rol: { type: String, required: true } //Añadido el atributo rol
