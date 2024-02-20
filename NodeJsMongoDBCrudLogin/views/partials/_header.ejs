@@ -25,8 +25,17 @@
           <% if (user) { %>
             <!--Acceder al perfil del usuario -->
             <li class="nav-item">
+              <a class="nav-link" href="/profile">Perfil</a>
+            </li>
+
+            <!--
+              Comentado porque no funciona bien en la pantalla de editar usuario
+              (sale el correo del que se está editando)
+            <li class="nav-item">
               <a class="nav-link" href="/profile">Perfil <%=user.email%></a>
             </li>
+            -->
+
             <% if (user.rol=="alumno" ) { %>
               <!--Acceder a la vista general de asignaturas. Solo opción de vista-->
               <li class="nav-item">
@@ -49,7 +58,7 @@
                     <% } %>
         </ul>
         <% if(user){ %>
-            <a class="nav-link disabled" href="/logout">Log out</a>
+          <a class="nav-link disabled" href="/logout">Log out</a>
           <% } %>
       </div>
     </nav>
