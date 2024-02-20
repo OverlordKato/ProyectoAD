@@ -21,12 +21,33 @@
 
               <!--Campo (tipo dropdown) para introducir el rol-->
               <div class="form-group">
-                <select name="rol">
-                  <option value="administrador">Administrador</option>
-                  <option value="profesor">Profesor</option>
-                  <option value="alumno">Alumno</option>
-                </select>
+
+                <% if(user.rol=="administrador"){ %>
+                  <select name="rol">
+                    <option selected value="administrador">Administrador</option>
+                    <option value="profesor">Profesor</option>
+                    <option value="alumno">Alumno</option>
+                  </select>
+                  <% }else if(user.rol == "profesor"){ %>
+                    <select name="rol">
+                      <option value="administrador">Administrador</option>
+                      <option selected value="profesor">Profesor</option>
+                      <option value="alumno">Alumno</option>
+                    </select>
+                    <% }else{ %>
+                      <select name="rol">
+                        <option value="administrador">Administrador</option>
+                        <option value="profesor">Profesor</option>
+                        <option selected value="alumno">Alumno</option>
+                      </select>
+                      <% } %>
+
+                
+
               </div>
+
+
+
               <button class="btn btn-primary" type="submit">Actualizar</button>
             </form>
           </div>
