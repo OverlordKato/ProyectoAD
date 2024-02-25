@@ -1,6 +1,6 @@
 Ellie
     -¿Hay que darle plan de estudios como atributo a los usuarios para limitar qué planes de estudios pueden ver?
-    -¿Cómo se guardan los archivos de una asignatura que se suben? En una carpeta en el programa, pero ¿guardando su ubicación exacta en la base de datos? En tal caso, ¿habría que crear una carpeta de archivos por cada     asignatura? Ya que, si se guardan los archivos de todas en la misma carpeta, no podrá haber archivos repetidos...
+    -¿Cómo se guardan los archivos de una asignatura que se suben? En una carpeta en el programa, pero ¿guardando su ubicación exacta en la base de datos? En tal caso, ¿habría que crear una carpeta de archivos por cada asignatura? Ya que, si se guardan los archivos de todas en la misma carpeta, no podrá haber archivos repetidos...
 
 Adri
     -
