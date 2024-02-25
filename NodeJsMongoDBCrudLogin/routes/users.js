@@ -61,9 +61,10 @@ router.get('/users/delete/:id', isAuthenticated, async (req, res, next) => {
 //Añadida la rutas edit (get)
 router.get('/users/edit/:id', isAuthenticated, async (req, res, next) => {
   if(req.user.rol=="administrador"){
-  var user = new User();
-  user = await user.findById(req.params.id);
-  res.render('userEdit', { user });
+    //Cambiado el nombre de la variable a "editUser" para que la aplicacion no lo confunda con el "user" que tiene la sesión actual
+  var editUser = new User(); 
+  editUser = await editUser.findById(req.params.id);
+  res.render('userEdit', { editUser });
 }else{
   res.redirect('/');
 }
