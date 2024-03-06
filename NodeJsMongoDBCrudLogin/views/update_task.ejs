@@ -55,7 +55,7 @@
             }
           </style>
           <!--Un estilo para evitar que los botones de eliminar usuario se coman los unos a los otros.-->
-          <div class="form-group">
+          <div class="form-group" style="min-width: 400px;">
             <% if (task.usuario && task.usuario.length> 0) { %>
               <ul>
                 <% task.usuario.forEach(function(user) { %>
@@ -126,15 +126,20 @@
                       <td>
                         <%= softwares[i].nombre %>
                       </td>
-                      <td><a target="_blank" href="<%= " http://" + softwares[i].url %>"><%= softwares[i].url.slice(0,
-                            20) %>
-                            <% if (softwares[i].url.length> 20) { %>...<% } %></a>
-                      </td>
+                      <td><a target="_blank" href="<%= " http://" + softwares[i].url %>"><%=
+                            softwares[i].url.slice(0,20) %>
+                            <% if (softwares[i].url.length> 20) { %>...<% } %></a></td>
                       <% if(user.rol=="administrador" || user.rol=="profesor" ) {%>
                         <!--Solo lo ven admins y profesores-->
                         <td>
-                          <a href="/softwares/update/<%= softwares[i]._id %>" class="btn btn-primary">Actualizar</a>
-                          <a href="/softwares/delete/<%= softwares[i]._id %>" class="btn btn-danger">Eliminar</a>
+                          <div>
+                            <a style="margin: 5px;" href="/softwares/update/<%= softwares[i]._id %>"
+                              class="btn btn-primary">Actualizar</a>
+                          </div>
+                          <div>
+                            <a style="margin: 5px;" href="/softwares/delete/<%= softwares[i]._id %>"
+                              class="btn btn-danger">Eliminar</a>
+                          </div>
                         </td>
                         <% } %>
                     </tr>
