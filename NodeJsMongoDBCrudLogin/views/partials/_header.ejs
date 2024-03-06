@@ -42,8 +42,12 @@
                 <% } else if(user.rol=="administrador" ) { %>
                   <!-- Acceder a la vista de Asignaturas con opciones CRUD completas, tanto en Asignaturas como en Software-->
                   <!--Enlace retocado-->
-                  <li class="nav-item">
-                    <a class="nav-link" href="/controlPanel">Panel de Control<span class="sr-only">(current)</span></a>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Panel de control</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/controlPanel/users">Usuarios</a>
+                      <a class="dropdown-item" href="/controlPanel/tasks">Asignaturas</a>
+                    </div>
                   </li>
                   <% } %>
                     <% } %>

@@ -4,15 +4,25 @@ const Task = require('../models/task');
 const Software = require('../models/software');//const para sacar el modelo de software
 const User = require('../models/user');//const para sacar el modelo de user
 
-//Nueva ruta para acceder al panel de control, pasandole todos los usuarios y todas las tareas
-router.get('/ControlPanel', isAuthenticated, async (req, res) => {
+//Modificada ruta para acceder al panel de control, pasandole solo los usuarios
+router.get('/controlPanel/users', isAuthenticated, async (req, res) => {
   if(req.user.rol=="administrador"){
   const user = new User();
-  const task = new Task();
   const users = await user.findAll();
+  res.render('users', {
+    users
+  });
+}else{
+  res.redirect('/');
+}
+});
+
+//Nueva ruta para acceder al panel de control, pasandole solo las tareas
+router.get('/controlPanel/tasks', isAuthenticated, async (req, res) => {
+  if(req.user.rol=="administrador"){
+  const task = new Task();
   const tasks = await task.findAll();
-  res.render('controlPanel', {
-    users,
+  res.render('tasks', {
     tasks
   });
 }else{
@@ -45,7 +55,7 @@ router.post('/tasks/add', isAuthenticated,async (req, res, next) => {
   // }
   //Quitado lo siguiente de esta línea, que asocia una tarea a un usuario ->   task.usuario=req.user._id;
   await task.insert();
-  res.redirect('/controlPanel');
+  res.redirect('/controlPanel/tasks');
 });
 
 router.get('/tasks/turn/:id',isAuthenticated, async (req, res, next) => {
@@ -96,7 +106,7 @@ router.get('/tasks/delete/:id', isAuthenticated,async (req, res, next) => {
   const task = new Task();
   let { id } = req.params;
   await task.delete(id);
-  res.redirect('/controlPanel');
+  res.redirect('/controlPanel/tasks');
 }else{
   res.redirect('/');
 }

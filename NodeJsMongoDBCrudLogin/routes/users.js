@@ -28,8 +28,8 @@ router.get('/logout', (req, res, next) => {
 //Añadida la ruta /users/add
 router.post('/users/add', passport.authenticate('local-signup', {
   //Rutas cambiadas para que, falle o salga bien, añadir un usuario lleve a la pantalla de usuarios
-  successRedirect: '/controlPanel',
-  failureRedirect: '/controlPanel',
+  successRedirect: '/controlPanel/users',
+  failureRedirect: '/controlPanel/users',
   failureFlash: true
 }));
 
@@ -52,7 +52,7 @@ router.get('/users/delete/:id', isAuthenticated, async (req, res, next) => {
   const user = new User();
   let { id } = req.params;
   await user.delete(id);
-  res.redirect('/controlPanel');
+  res.redirect('/controlPanel/users');
 }else{
   res.redirect('/');
 }
@@ -75,7 +75,7 @@ router.post('/users/edit/:id', isAuthenticated, async (req, res, next) => {
   const user = new User();
   const { id } = req.params;
   await user.update({ _id: id }, req.body);
-  res.redirect('/controlPanel');
+  res.redirect('/controlPanel/users');
 });
 
 function isAuthenticated(req, res, next) {
