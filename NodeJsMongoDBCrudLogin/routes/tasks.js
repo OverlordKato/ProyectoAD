@@ -7,27 +7,27 @@ const User = require('../models/user');//const para sacar el modelo de user
 //Modificada ruta para acceder al panel de control, pasandole solo los usuarios
 router.get('/controlPanel/users', isAuthenticated, async (req, res) => {
   if(req.user.rol=="administrador"){
-  const user = new User();
-  const users = await user.findAll();
-  res.render('users', {
-    users
-  });
-}else{
-  res.redirect('/');
-}
+    const user = new User();
+    const users = await user.findAll();
+    res.render('users', {
+      users
+    });
+  }else{
+    res.redirect('/');
+  }
 });
 
 //Nueva ruta para acceder al panel de control, pasandole solo las tareas
 router.get('/controlPanel/tasks', isAuthenticated, async (req, res) => {
   if(req.user.rol=="administrador"){
-  const task = new Task();
-  const tasks = await task.findAll();
-  res.render('tasks', {
-    tasks
-  });
-}else{
-  res.redirect('/');
-}
+    const task = new Task();
+    const tasks = await task.findAll();
+    res.render('tasks', {
+      tasks
+    });
+  }else{
+    res.redirect('/');
+  }
 });
 
 //Ruta obsoleta
@@ -85,13 +85,13 @@ router.get('/tasks/turn/:id',isAuthenticated, async (req, res, next) => {
 //Route - Tasks
 router.get('/tasks/edit/:id', isAuthenticated, async (req, res, next) => {
   if(req.user.rol=="administrador" || req.user.rol=="profesor"){
-  var task = new Task();
-  var softwares = new Software();
-  task = await task.findById(req.params.id);
-  res.render('edit_task', { task, softwares });
-}else{
-  res.redirect('/');
-}
+    var task = new Task();
+    var softwares = new Software();
+    task = await task.findById(req.params.id);
+    res.render('edit_task', { task, softwares });
+  }else{
+    res.redirect('/');
+  }
 });
 
 router.post('/tasks/edit/:id',isAuthenticated, async (req, res, next) => {
@@ -103,13 +103,13 @@ router.post('/tasks/edit/:id',isAuthenticated, async (req, res, next) => {
 
 router.get('/tasks/delete/:id', isAuthenticated,async (req, res, next) => {
   if(req.user.rol=="administrador"){
-  const task = new Task();
-  let { id } = req.params;
-  await task.delete(id);
-  res.redirect('/controlPanel/tasks');
-}else{
-  res.redirect('/');
-}
+    const task = new Task();
+    let { id } = req.params;
+    await task.delete(id);
+    res.redirect('/controlPanel/tasks');
+  }else{
+    res.redirect('/');
+  }
 });
 
 router.get('/tasks/search',isAuthenticated, async (req, res, next) => {
@@ -162,11 +162,15 @@ router.post('/tasks/:id/removeUser', isAuthenticated, async (req, res) => {
 //Método que permite agregar usuarios a una task
 router.post('/tasks/:id/addUser', isAuthenticated, async (req, res) => {
   const { id } = req.params;
-  const userId = req.body.userId;
+  const users = req.body.users; //Cambiado para que coja el array de IDs
   const task = await Task.findById(id);
-  if (!task.usuario.includes(userId)) {
-    task.usuario.push(userId);
-    await task.save();
+  if (users != null) { //Controla si no se ha seleccionado ningun usuario (el select es null)
+    for (var i = 0; i < users.length; i++) { //Recorre el array de usuarios, mira si ya están añadidos, y si no los añade
+      if (!task.usuario.includes(users[i])) {
+        task.usuario.push(users[i]);
+        await task.save();
+      }
+    }
   }
   res.redirect('/tasks/update_task/' + id);
 });

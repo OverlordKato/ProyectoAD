@@ -78,7 +78,7 @@
               <% }); %>
             </ul>
             <% } else { %>
-            <p>No hay usuarios asociados a esta tarea.</p>
+            <p>No hay usuarios asociados a esta asignatura.</p>
             <% } %>
           </div>
         </div>
@@ -88,14 +88,16 @@
               <div class="card-body">
                 <h5>Asociar usuarios a esta asignatura:</h5>
                 <form action="/tasks/<%= task._id %>/addUser" method="post" class="d-flex justify-content-between">
-                  <select name="userId" class="flex-grow-1 mr-2">
-                    <% users.forEach(function(user) { %>
-                      <% if (user.rol != "administrador") { %>
-                        <option value="<%= user._id %>"><%= user.nombre %> <%= user.apellidos %></option>
+
+                  <select name="users" class="flex-grow-1 mr-2" multiple="multiple">
+                    <% users.forEach(function(savedUser) { %>
+                      <% if (savedUser.rol != "administrador") { %>
+                        <option value="<%= savedUser._id %>"><%= savedUser.nombre %> <%= savedUser.apellidos %></option>
                       <% } %>
                     <% }); %>
                   </select>
-                  <button class="btn btn-success" type="submit">Asociar usuario</button>
+
+                  <button class="btn btn-success" type="submit">Asociar usuarios</button>
                 </form>
               </div>  
             </div>    
