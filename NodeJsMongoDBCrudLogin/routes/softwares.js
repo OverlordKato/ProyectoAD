@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Software = require('../models/software');
 const path = require('path');//Para la búsqueda de archivos y su descarga
+const fs = require('fs');//Para la búsqueda de archivos y su descarga
 
 // Ruta obsoleta
 // router.get('/softwares',isAuthenticated, async (req, res) => {
@@ -175,16 +176,21 @@ router.get('/softwares/download/:name', isAuthenticated, async (req, res) => {
         const directoryPath = path.join(__dirname, '../files'); 
         const filePath = path.join(directoryPath, name);
 
-        // Descargar el archivo
-        res.download(filePath, name, function(err){
-          if (err) {
-            console.error('Error al descargar el archivo:', err);
-            res.redirect(`/softwares/update/${id}`);
+        // Comprobar si el archivo existe y descargarlo. Si no, error por consola
+        if (fs.existsSync(filePath)) {
+            res.download(filePath, name, function(err){
+                if (err) {
+                    console.error('Error al descargar el archivo:', err);
+                    res.redirect('back');//Para recargar la página en caso de error
+                }
+            });
+          } else {
+            console.error('El archivo no existe:', filePath);
+            res.redirect('back');//Para recargar la página en caso de error
           }
-        });
     } catch (error) {
-      console.error('Error al descargar el archivo:', error);
-      res.redirect(`/softwares/update/${id}`);
+        console.error('Error al descargar el archivo:', error);
+        res.redirect('back');//Para recargar la página en caso de error
     }
 });
 

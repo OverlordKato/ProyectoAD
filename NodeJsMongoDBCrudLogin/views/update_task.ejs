@@ -89,14 +89,14 @@
                   <tr>
                     <td><%= usuario.nombre %></td>
                     <td><%= usuario.apellidos %></td>
+                    <% if(user.rol=="administrador"){ %>
                     <td class="text-center">
                       <form action="/tasks/<%= task._id %>/removeUser" method="post">
                         <input type="hidden" name="userId" value="<%= usuario._id %>">
-                        <% if(user.rol=="administrador"){ %>
                           <button class="btn btn-danger btn-block" type="submit">Eliminar</button>
-                        <% } %>
                       </form>
                     </td>
+                    <% } %>
                   </tr>
                 <% }); %>
               <% } else { %>
@@ -139,10 +139,14 @@
                           softwares[i].url.slice(0,20) %>
                           <% if (softwares[i].url.length> 20) { %>...<% } %></a></td>
                           <td class="text-center">
-                            <% for(var j=0; j < softwares[i].archivos.length; j++) { %>
-                              - <a href="/softwares/download/<%= softwares[i].archivos[j].name %>"><%= softwares[i].archivos[j].name %></a><br>
-                            <% } %>
-                          </td>      
+                            <% if (softwares[i].archivos.length > 0) { %>
+                              <% for(var j=0; j < softwares[i].archivos.length; j++) { %>
+                                - <a href="/softwares/download/<%= softwares[i].archivos[j].name %>"><%= softwares[i].archivos[j].name %></a><br>
+                              <% } %>
+                            <% } else { %>  
+                              <a>No existen archivos asociados a este software</a>
+                          </td>   
+                          <% } %>   
                     <% if(user.rol=="administrador" || user.rol=="profesor" ) {%>
                       <!--Solo lo ven admins y profesores-->
                       <td class="text-center">
