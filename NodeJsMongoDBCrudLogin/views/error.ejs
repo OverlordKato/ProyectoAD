@@ -6,7 +6,7 @@
     }
 </style>
 <h1 >Página no encontrada</h1>
-
+<% if (error) { %>
+    <pre><%= error %></pre> <!-- Mostrar el stack de error -->
+<% } %>
 <% include partials/_footer %>
-
-

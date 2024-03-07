@@ -13,6 +13,8 @@ require('./passport/local-auth');
 var tasksRouter = require('./routes/tasks');
 var usersRouter = require('./routes/users');
 var softwaresRouter = require('./routes/softwares');//Necesario para que pueda acceder a la ruta nueva de softwares
+var suggestionsRouter = require('./routes/sugerencias');
+
 
 //Conexión con la base de datos
 const mongoose = require('mongoose');
@@ -54,6 +56,8 @@ app.use((req, res, next) => {
 app.use('/', usersRouter);
 app.use('/', tasksRouter);
 app.use('/', softwaresRouter);//Necesario para que pueda acceder a la ruta nueva de softwares
+app.use('/', suggestionsRouter);//Necesario para que pueda acceder a la ruta nueva de softwares
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
