@@ -4,7 +4,7 @@
       <div class="col-md-6 offset-md-3">
         <div class="card">
           <div class="card-body">
-            <h3>Editar Tarea</h3>
+            <h3 class="text-center">Editar Tarea</h3>
             <!-- Formulario para editar la tarea -->
             <form action="/tasks/edit/<%= task._id %>" method="post">
               <!-- Modificado el action para apuntar a /tasks/edit/:id -->
@@ -44,7 +44,7 @@
                 <input class="form-control" type="text" name="curso" id="curso" placeholder="Curso"
                   value="<%= task.curso %>" required>
               </div>
-              <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+              <button class="btn btn-primary btn-block" type="submit">Guardar Cambios</button>
             </form>
           </div>
         </div>
