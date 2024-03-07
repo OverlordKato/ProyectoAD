@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const User = require('../models/user');
 
-router.get('/sugerencias', async (req, res) => {
+router.get('/sugerencias', isAuthenticated, async (req, res) => {
     const success = req.query.success; // Obtener el parámetro de consulta "success"
     const error = req.query.error;
-    res.render('sugerencias_formulario', { success, error }); // Pasar el parámetro "success" a la vista
+    const user = req.user; // Obtener el usuario autenticado
+    res.render('sugerencias_formulario', { success, error, user }); // Pasar el parámetro "success" a la vista
 });
 
-
 // Ruta para procesar el envío del formulario de sugerencias
-router.post('/sugerencias/enviar', async (req, res) => {
-    const { name, suggestion } = req.body;
+router.post('/sugerencias/enviar', isAuthenticated, async (req, res) => {
+    const { name: subject, suggestion } = req.body;
+    const user = req.user;
 
     try {
         // Configuración del transportador de correo electrónico
@@ -28,8 +30,8 @@ router.post('/sugerencias/enviar', async (req, res) => {
         let mailOptions = {
             from: 'shaylee.kuhlman@ethereal.email',
             to: 'dam2proyectoad3@gmail.com',
-            subject: `Asunto: ${name}`,
-            text: `Sugerencia: ${suggestion}`
+            subject: `Sugerencia de ${user.nombre}: ${subject}`,
+            text: `Sugerencia de ${user.nombre} ${user.apellidos} (${user.email}), Rol: ${user.rol}\n\nSugerencia: ${suggestion}`
         };
 
         // Enviar correo electrónico al administrador
@@ -45,5 +47,13 @@ router.post('/sugerencias/enviar', async (req, res) => {
         res.redirect('/sugerencias?error=true');
     }
 });
+
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+
+    res.redirect('/');
+}
 
 module.exports = router;
