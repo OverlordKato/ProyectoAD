@@ -3,6 +3,34 @@ const router = express.Router();
 const Task = require('../models/task');
 const Software = require('../models/software');//const para sacar el modelo de software
 const User = require('../models/user');//const para sacar el modelo de user
+const fs = require('fs'); // filesystem
+const csv = require('csv-parser');// Encargado de parsear
+
+const readCsvFile = async (fileName) => {
+  let result = [];
+  var cont = 1;
+  await fs.createReadStream(fileName)
+    .pipe(csv({ separator: "," }))
+    .on("data", (data) => result.push(data))
+    .on("end", () => {
+        result.map(task=>{
+          if(task.nombre && task.planEstudios && task.cuatrimestre && task.curso 
+              &&(task.planEstudios == "Grado" || task.planEstudios == "Master" 
+              || task.planEstudios == "Doctorado")){//Verificamos la validez del objeto antes de integrarlo
+            var tarea = new Task();
+            tarea.nombre=task.nombre;
+            tarea.planEstudios=task.planEstudios;
+            tarea.cuatrimestre=task.cuatrimestre;
+            tarea.curso=task.curso;
+            tarea.save();
+          }
+          else {
+            console.error('Faltan campos requeridos o el plan de estudios es inválido en la asignatura con índice:', cont);
+          }  
+          cont++; 
+        });  
+    })
+};
 
 //Modificada ruta para acceder al panel de control, pasandole solo los usuarios
 router.get('/controlPanel/users', isAuthenticated, async (req, res) => {
@@ -181,6 +209,15 @@ router.post('/tasks/:id/addUser', isAuthenticated, async (req, res) => {
     }
   }
   res.redirect('/tasks/update_task/' + id);
+});
+
+router.post('/tasks/uploadCSV', isAuthenticated, (req, res) => {
+  var fileTasks=req.files.file;
+  fileTasks.mv(`./files/tasks/${fileTasks.name}`,err=>{
+    if(err) return res.status(500).send({message:err});
+    readCsvFile(`./files/tasks/${fileTasks.name}`);
+    res.redirect("/controlPanel/tasks");
+  });
 });
 
 module.exports = router;

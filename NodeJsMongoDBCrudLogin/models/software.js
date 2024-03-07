@@ -15,6 +15,10 @@ const SoftwareSchema = new Schema({
     type: String,
     required: true
   },
+  archivos: [{
+    name: String,
+    path: String
+  }],
   task:
     {type: mongoose.Schema.Types.ObjectId, ref:'task'}
 });

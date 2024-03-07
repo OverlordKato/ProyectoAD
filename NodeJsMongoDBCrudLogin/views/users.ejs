@@ -31,7 +31,23 @@
                   <option value="alumno">Alumno</option>
                 </select>
               </div>
-              <button class="btn btn-primary" type="submit">Agregar</button>
+              <button class="btn btn-primary btn-block" type="submit">Agregar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario para subir archivos CSV -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>Crear Usuarios desde CSV</h5>
+            <form action="/users/uploadCSV" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="csv">Archivo CSV:</label>
+                <input class="form-control" type="file" name="file" id="file" accept="text/csv" required>
+              </div>
+              <button class="btn btn-primary btn-block" type="submit">Subir CSV</button>
             </form>
           </div>
         </div>

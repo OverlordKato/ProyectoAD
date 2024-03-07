@@ -1,6 +1,41 @@
 const router = require('express').Router();
 const passport = require('passport');
 const User = require('../models/user'); //Añadida esta linea para que se pueda usar el modelo de User y acceder a sus metodos
+const fs = require('fs'); // filesystem
+const csv = require('csv-parser');// Encargado de parsear
+
+const readCsvFile = async (fileName) => {
+  let result = [];
+  var cont = 1;
+  await fs.createReadStream(fileName)
+    .pipe(csv({ separator: "," }))
+    .on("data", (data) => result.push(data))
+    .on("end", () => {
+        result.map(async user=>{
+          if(user.nombre && user.apellidos && user.email.includes('@') && user.password && user.rol &&
+            (user.rol == "administrador" || user.rol == "profesor" || user.rol == "alumno")) {//Verificamos la validez del objeto antes de integrarlo
+            let usuarioExistente = await User.findOne({ email: user.email });//Verificamos si el usuario ya existe
+
+            if(usuarioExistente){
+              console.error('Ya existe un usuario con el email:', user.email);
+            }     
+            else{
+              var usuario = new User();
+              usuario.nombre=user.nombre;
+              usuario.apellidos=user.apellidos;
+              usuario.email=user.email;
+              usuario.password=user.password;
+              usuario.rol=user.rol;
+              usuario.save();
+            }       
+          } else {
+            console.error('Faltan campos requeridos, el valor de rol es inválido o el email no contiene una @ en el usuario con índice:', cont);
+          }
+          cont++;
+        });   
+    })
+};
+
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -85,5 +120,14 @@ function isAuthenticated(req, res, next) {
 
   res.redirect('/')
 }
+
+router.post('/users/uploadCSV', isAuthenticated, (req, res) => {
+  var fileUsers=req.files.file;
+  fileUsers.mv(`./files/users/${fileUsers.name}`,err=>{
+    if(err) return res.status(500).send({message:err});
+    readCsvFile(`./files/users/${fileUsers.name}`);
+    res.redirect("/users");
+  });
+});
 
 module.exports = router;

@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Software = require('../models/software');
+const path = require('path');//Para la búsqueda de archivos y su descarga
 
 // Ruta obsoleta
 // router.get('/softwares',isAuthenticated, async (req, res) => {
@@ -76,6 +77,7 @@ router.get('/softwares/update/:id', isAuthenticated, async (req, res) => {
     res.redirect('/');
   }
 });
+
 /*Métodos nuevos*/
 // POST para procesar la actualización de un software
 router.post('/softwares/update/:id', isAuthenticated, async (req, res) => {
@@ -101,6 +103,88 @@ router.post('/softwares/update/:id', isAuthenticated, async (req, res) => {
     } catch (error) {
         console.error('Error al actualizar el software:', error);
         res.redirect(`/tasks/update_task/${taskId}`); // Redirigir a la lista de software en caso de error
+    }
+});
+
+router.post('/softwares/upload/:id', isAuthenticated, async (req, res) => { 
+    try {
+        // Obtener el ID del software de la URL
+        const { id } = req.params;
+        // Buscar el software por su ID en la base de datos
+        const software = await Software.findById(id);
+
+        // Procesar el archivo subido
+        let EDFile = req.files.file;
+        let path = `./files/${EDFile.name}`;
+        EDFile.mv(path, async err => { 
+            if(err) {
+                console.error('Error al mover el archivo:', err);
+                return res.status(500).send({ message : err });
+            }
+
+            // Guardar la información del archivo en el software
+            software.archivos.push({
+                name: EDFile.name,
+                path: path
+            });
+
+            // Guardar los cambios en la base de datos
+            await software.save();
+
+            // Redirigir a la página de actualización de software
+            res.redirect(`/softwares/update/${id}`);
+        });
+    } catch (error) {
+        console.error('Error al subir el archivo:', error);
+        res.redirect(`/softwares/update/${id}`);
+    }
+});
+
+router.get('/softwares/deleteFile/:id/:index', isAuthenticated, async (req, res) => {
+    if(req.user.rol=="administrador" || req.user.rol=="profesor"){
+        try {
+            // Obtener el ID del software y el índice del archivo de la URL
+            const { id, index } = req.params;
+            // Buscar el software por su ID en la base de datos
+            const software = await Software.findById(id);
+        
+            // Eliminar el archivo del array de archivos
+            software.archivos.splice(index, 1);
+
+            // Guardar los cambios en la base de datos
+            await software.save();
+        
+            // Redirigir a la página de actualización de software
+            res.redirect(`/softwares/update/${id}`);
+        } catch (error) {
+        console.error('Error al eliminar el archivo:', error);
+        res.redirect(`/softwares/update/${id}`);
+        }
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+router.get('/softwares/download/:name', isAuthenticated, async (req, res) => {
+    try {
+        // Obtener el nombre del archivo de la URL
+        const { name } = req.params;
+        
+        // Hacer una ruta de acceso al archivo
+        const directoryPath = path.join(__dirname, '../files'); 
+        const filePath = path.join(directoryPath, name);
+
+        // Descargar el archivo
+        res.download(filePath, name, function(err){
+          if (err) {
+            console.error('Error al descargar el archivo:', err);
+            res.redirect(`/softwares/update/${id}`);
+          }
+        });
+    } catch (error) {
+      console.error('Error al descargar el archivo:', error);
+      res.redirect(`/softwares/update/${id}`);
     }
 });
 

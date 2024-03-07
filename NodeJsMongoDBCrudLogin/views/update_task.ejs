@@ -119,6 +119,7 @@
                     <tr>
                       <th>Nombre del software</th>
                       <th>URL</th>
+                      <th>Archivos</th>
                       <% if(user.rol=="administrador" || user.rol=="profesor" ) {%>
                         <!--Solo lo ven admins y profesores-->
                         <th>Operaciones</th>
@@ -135,6 +136,11 @@
                           <td><a target="_blank" href="<%= " http://" + softwares[i].url %>"><%=
                                 softwares[i].url.slice(0,20) %>
                                 <% if (softwares[i].url.length> 20) { %>...<% } %></a></td>
+                                <td>
+                                  <% for(var j=0; j < softwares[i].archivos.length; j++) { %>
+                                    - <a href="/softwares/download/<%= softwares[i].archivos[j].name %>"><%= softwares[i].archivos[j].name %></a><br>
+                                  <% } %>
+                                </td>      
                           <% if(user.rol=="administrador" || user.rol=="profesor" ) {%>
                             <!--Solo lo ven admins y profesores-->
                             <td>

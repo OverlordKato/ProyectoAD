@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const logger = require('morgan');
+const fileUpload = require('express-fileupload');//Nueva constante para configurar la subida de archivos
 var app = express();
 //require('./database');
 
@@ -42,6 +43,7 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(fileUpload());//Para la subida de archivos
 // middlewares
 
 

@@ -30,7 +30,23 @@
                 <label for="curso">Curso:</label>
                 <input class="form-control" type="text" name="curso" id="curso" placeholder="Curso" required>
               </div>
-              <button class="btn btn-primary" type="submit">Agregar</button>
+              <button class="btn btn-primary btn-block" type="submit">Agregar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!--Crear asignaturas desde csv-->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5>Crear Tareas desde CSV</h5>
+            <form action="/tasks/uploadCSV" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="csv">Archivo CSV:</label>
+                <input class="form-control" type="file" name="file" id="file" accept="text/csv" required>
+              </div>
+              <button class="btn btn-primary btn-block" type="submit">Subir CSV</button>
             </form>
           </div>
         </div>
