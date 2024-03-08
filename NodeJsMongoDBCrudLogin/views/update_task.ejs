@@ -1,9 +1,18 @@
 <% include partials/_header %>
-
-<div style="margin: 1%" class="row">
-  <div class="col-md-4">
+<style>
+  .scrollable {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .card {
+    margin: 10px; /* Ajusta este valor para cambiar el tamaño de la separación */
+  }
+    
+</style>
+<div class="row">
+  <div class="col-md-6 ">
     <!-- Información de la asignatura -->
-    <div style="margin: 1%" class="card">
+    <div class="card scrolleable ">
       <div class="card-body">
         <h5 class="text-center">Asignatura</h5>
         <p><strong>Nombre:</strong> <%= task.nombre %></p>
@@ -20,7 +29,7 @@
 
     <!-- Añadir usuarios -->
     <% if(user.rol == "administrador") { %>
-      <div style="margin: 1%" class="card">
+      <div class="card">
         <div class="card-body">
           <h5 class="text-center">Añadir usuarios</h5>
           <form action="/tasks/<%= task._id %>/addUser" method="post">
@@ -40,39 +49,10 @@
         </div>
       </div>
     <% } %>
-    <% if(user.rol=="administrador" ){ %>
-      <!-- Añadido de softwares-->
-      <div style="margin: 1%" class="card">
-        <div class="card-body">
-          <form action="/softwares/add/<%= task._id %>" method="post">
-            <div class="form-group">
-              <h5 class="text-center">Nuevo Software</h5>
-              <label for="nombre">Nombre:</label>
-              <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" required>
-            </div>
-            <div class="form-group">
-              <label for="url">URL:</label>
-              <input class="form-control" type="text" name="url" id="url" placeholder="URL" required>
-            </div>
-            <div class="form-group">
-              <label for="descripcion">Descripción:</label>
-              <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Descripción" style="height: 100px;" maxlength="150" required></textarea>
-            </div>
-            <div class="text-center">
-              <button class="btn btn-primary btn-block" type="submit">Agregar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    <% } %>
-  </div>
-
-  <div class="col-md-4">
-    <!-- Información de los participantes de la asignatura -->
-    <div style="margin: 1%" class="card">
+    <div class="card scrollable">
       <div class="card-body">
         <h5 class="text-center">Usuarios Asociados</h5>
-        <div class="form-group" style="min-width: 400px;">
+        <div class="form-group">
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -110,9 +90,35 @@
       </div>
     </div>
   </div>
+
   <!-- Información de los softwares de la asignatura -->
-  <div class="col-md-4">
-    <div style="margin: 1%" class="card d-flex flex-column align-items-stretch">
+  <div class="col-md-6">
+    <% if(user.rol=="administrador" ){ %>
+      <!-- Añadido de softwares-->
+      <div class="card">
+        <div class="card-body">
+          <form action="/softwares/add/<%= task._id %>" method="post">
+            <div class="form-group">
+              <h5 class="text-center">Nuevo Software</h5>
+              <label for="nombre">Nombre:</label>
+              <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="url">URL:</label>
+              <input class="form-control" type="text" name="url" id="url" placeholder="URL" required>
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Descripción:</label>
+              <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Descripción" style="height: 100px;" maxlength="150" required></textarea>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-primary btn-block" type="submit">Agregar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    <% } %>
+    <div class="card d-flex flex-column align-items-stretch scrollable">
       <div class="card-body">
         <h5 class="text-center">Softwares Relacionados</h5>
         <div class="form-group">
