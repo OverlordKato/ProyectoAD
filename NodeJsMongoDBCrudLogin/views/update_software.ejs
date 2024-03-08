@@ -3,6 +3,15 @@
   <div class="row mt-4">
     <div class="col-md-6">
       <div class="card">
+        <% if (typeof success !== 'undefined' && success === 'true') { %>
+          <div class="alert alert-success" role="alert">
+            ¡Acción completada con exito!
+          </div>
+        <% } else if (typeof error !== 'undefined' && error === 'true') { %>
+          <div class="alert alert-danger" role="alert">
+            Hubo un error al completar la acción. Por favor, inténtalo de nuevo.
+          </div>
+        <% } %>
         <div class="card-body">
           <h3>Editar Software</h3>
           <!-- Formulario para editar el software -->

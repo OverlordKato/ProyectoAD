@@ -32,10 +32,10 @@ router.post('/softwares/add/:id', isAuthenticated, async (req, res) => {
         await newSoftware.save();
 
         // Redirigir a la lista de software después de agregar con un mensaje de éxito
-        res.redirect(`/tasks/update_task/${taskId}`);
+        res.redirect(`/tasks/update_task/${taskId}?success=true`);
     } catch (error) {
         console.error('Error al agregar el nuevo software:', error);
-        res.redirect(`/tasks/update_task/${taskId}`);
+        res.redirect(`/tasks/update_task/${taskId}?error=true`);
     }
 });
 
@@ -46,7 +46,7 @@ router.get('/softwares/delete/:id', isAuthenticated,async (req, res, next) => {
     const taskId = software.task;
     console.log("id del task" + taskId);
     await software.delete(id);
-    res.redirect(`/tasks/update_task/${taskId}`);
+    res.redirect(`/tasks/update_task/${taskId}?success=true`);
 }else{
     res.redirect('/');
   }
@@ -66,13 +66,15 @@ router.get('/softwares/update/:id', isAuthenticated, async (req, res) => {
     try {
         // Obtener el ID del software de la URL
         const { id } = req.params;
+        const success = req.query.success; // Obtener el parámetro de consulta "success"
+        const error = req.query.error;
         // Buscar el software por su ID en la base de datos
         const software = await Software.findById(id);
         // Renderizar el formulario de actualización con los datos del software
-        res.render('update_software', { software });
+        res.render('update_software', { software,error, success });
     } catch (error) {
         console.error('Error al obtener el formulario de actualización de software:', error);
-        res.redirect(`/tasks/update_task/${taskId}`); // Redirigir a la lista de software en caso de error
+        res.redirect(`/tasks/update_task/${taskId}?success=true`); // Redirigir a la lista de software en caso de error
     }
 }else{
     res.redirect('/');
@@ -100,10 +102,10 @@ router.post('/softwares/update/:id', isAuthenticated, async (req, res) => {
         await software.save();
 
         // Redirigir a la lista de software después de la actualización con un mensaje de éxito
-        res.redirect(`/tasks/update_task/${taskId}`);
+        res.redirect(`/tasks/update_task/${taskId}?success=true`);
     } catch (error) {
         console.error('Error al actualizar el software:', error);
-        res.redirect(`/tasks/update_task/${taskId}`); // Redirigir a la lista de software en caso de error
+        res.redirect(`/tasks/update_task/${taskId}?error=true`); // Redirigir a la lista de software en caso de error
     }
 });
 
@@ -133,11 +135,11 @@ router.post('/softwares/upload/:id', isAuthenticated, async (req, res) => {
             await software.save();
 
             // Redirigir a la página de actualización de software
-            res.redirect(`/softwares/update/${id}`);
+            res.redirect(`/softwares/update/${id}?success=true`);
         });
     } catch (error) {
         console.error('Error al subir el archivo:', error);
-        res.redirect(`/softwares/update/${id}`);
+        res.redirect(`/softwares/update/${id}?error=true`);
     }
 });
 
@@ -156,10 +158,10 @@ router.get('/softwares/deleteFile/:id/:index', isAuthenticated, async (req, res)
             await software.save();
         
             // Redirigir a la página de actualización de software
-            res.redirect(`/softwares/update/${id}`);
+            res.redirect(`/softwares/update/${id}?success=true`);
         } catch (error) {
         console.error('Error al eliminar el archivo:', error);
-        res.redirect(`/softwares/update/${id}`);
+        res.redirect(`/softwares/update/${id}?error=true`);
         }
     }
     else{

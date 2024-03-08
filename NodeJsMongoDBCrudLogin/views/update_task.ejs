@@ -7,13 +7,22 @@
   .card {
     margin: 10px; /* Ajusta este valor para cambiar el tamaño de la separación */
   }
-    
 </style>
 <div class="row">
   <div class="col-md-6 ">
     <!-- Información de la asignatura -->
-    <div class="card scrolleable ">
+    <div class="card">
+      
       <div class="card-body">
+        <% if (typeof success !== 'undefined' && success === 'true') { %>
+          <div class="alert alert-success" role="alert">
+            ¡Acción completada con exito!
+          </div>
+        <% } else if (typeof error !== 'undefined' && error === 'true') { %>
+          <div class="alert alert-danger" role="alert">
+            Hubo un error al completar la acción. Por favor, inténtalo de nuevo.
+          </div>
+        <% } %>
         <h5 class="text-center">Asignatura</h5>
         <p><strong>Nombre:</strong> <%= task.nombre %></p>
         <p><strong>Plan de Estudios:</strong> <%= task.planEstudios %></p>

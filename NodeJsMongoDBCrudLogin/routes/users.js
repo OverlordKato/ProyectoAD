@@ -64,17 +64,19 @@ router.get('/logout', (req, res, next) => {
 router.post('/users/add', passport.authenticate('local-signup', {
   //Rutas cambiadas para que, falle o salga bien, añadir un usuario lleve a la pantalla de usuarios
   successRedirect: '/controlPanel/users',
-  failureRedirect: '/controlPanel/users',
+  failureRedirect: '/controlPanel/users?success=true',
   failureFlash: true
 }));
 
 //Añadida la ruta /users
 router.get('/users', isAuthenticated, async (req, res) => {
-  if(req.user.rol=="administrador"){
+  if(req.user.rol=="administrador"){ 
+    const success = req.query.success; // Obtener el parámetro de consulta "success"
+    const error = req.query.error;
   const user = new User();
   const users = await user.findAll();
   res.render('users', {
-    users
+    users, error, success
   });
 }else{
   res.redirect('/');
@@ -87,7 +89,7 @@ router.get('/users/delete/:id', isAuthenticated, async (req, res, next) => {
   const user = new User();
   let { id } = req.params;
   await user.delete(id);
-  res.redirect('/controlPanel/users');
+  res.redirect('/controlPanel/users?success=true');
 }else{
   res.redirect('/');
 }
@@ -110,7 +112,7 @@ router.post('/users/edit/:id', isAuthenticated, async (req, res, next) => {
   const user = new User();
   const { id } = req.params;
   await user.update({ _id: id }, req.body);
-  res.redirect('/controlPanel/users');
+  res.redirect('/controlPanel/users?success=true');
 });
 
 function isAuthenticated(req, res, next) {
@@ -126,7 +128,7 @@ router.post('/users/uploadCSV', isAuthenticated, (req, res) => {
   fileUsers.mv(`./files/users/${fileUsers.name}`,err=>{
     if(err) return res.status(500).send({message:err});
     readCsvFile(`./files/users/${fileUsers.name}`);
-    res.redirect("/users");
+    res.redirect("/users?success=true");
   });
 });
 
