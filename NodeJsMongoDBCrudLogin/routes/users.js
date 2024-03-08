@@ -24,7 +24,7 @@ const readCsvFile = async (fileName) => {
               usuario.nombre=user.nombre;
               usuario.apellidos=user.apellidos;
               usuario.email=user.email;
-              usuario.password=user.password;
+              usuario.password=usuario.encryptPassword(user.password);
               usuario.rol=user.rol;
               usuario.save();
             }       

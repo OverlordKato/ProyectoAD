@@ -14,15 +14,6 @@ const userSchema = new Schema({
 userSchema.methods.encryptPassword = (password) => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
-
-userSchema.methods.comparePassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
-
-
-userSchema.methods.encryptPassword = (password) => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-};
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
@@ -33,7 +24,6 @@ userSchema.methods.findEmail = async (email) => {
   return await User.findOne({ 'email': email })
 
 };
-
 
 userSchema.methods.insert = async function () {
 
