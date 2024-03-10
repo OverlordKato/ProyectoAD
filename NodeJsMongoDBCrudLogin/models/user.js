@@ -19,14 +19,11 @@ userSchema.methods.comparePassword = function (password) {
 };
 
 userSchema.methods.findEmail = async (email) => {
-
   const User = mongoose.model("user", userSchema);
   return await User.findOne({ 'email': email })
-
 };
 
 userSchema.methods.insert = async function () {
-
   //await this.save();
   await this.save((err, res) => {
     err ? console.log(err) : "";

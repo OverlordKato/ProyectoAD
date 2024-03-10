@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const passport = require('passport');
 const User = require('../models/user'); //Añadida esta linea para que se pueda usar el modelo de User y acceder a sus metodos
-const fs = require('fs'); // filesystem
-const csv = require('csv-parser');// Encargado de parsear
+const fs = require('fs'); //filesystem
+const csv = require('csv-parser');//Para parsear el  csv
 
 const readCsvFile = async (fileName) => {
   let result = [];

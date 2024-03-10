@@ -1,4 +1,4 @@
-//Ruta nueva, con algunos post y get de tasks.js, necesitamos un edit también
+//Ruta nueva, con algunos post y get de tasks.js
 const express = require('express');
 const router = express.Router();
 const Software = require('../models/software');

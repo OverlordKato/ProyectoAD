@@ -15,11 +15,6 @@ const Schema = mongoose.Schema;
 // });
 
 const TaskSchema = Schema({
-  //Igual no se requiere un id? Ya se pone un _id automático
-  // id: {
-  //   type: Number,
-  //   required: true
-  // },
   nombre: {
     type: String,
     required: true
@@ -41,7 +36,6 @@ const TaskSchema = Schema({
   ]
 });
 
-//En los apuntes de Mario se ve que pone cada atributo a la constante por separado, pero aquí se junta todo?
 //Para buscar todas las asignaturas simultáneamente en vez de las asignadas a usuarios
 TaskSchema.methods.findAll= async function () {
   const Task = mongoose.model("tasks", TaskSchema);
@@ -78,21 +72,6 @@ TaskSchema.methods.delete= async function (id) {
   console.log(id + " deleted");
 
 };
-
-//Métodos de cuando se intentó meter software coomo un nuevo schema
-// TaskSchema.methods.insertSoftware = async function (softwareData) {
-//   softwareData.task = this._id; 
-//   this.software.push(softwareData);
-//   await this.save();
-// };
-
-// TaskSchema.methods.updateSoftware = async function (softwareId, updatedSoftwareData) {
-//   const softwareIndex = this.software.findIndex(software => software._id.toString() === softwareId);
-//   if (softwareIndex !== -1) {
-//     this.software[softwareIndex] = { ...this.software[softwareIndex], ...updatedSoftwareData };
-//     await this.save();
-//   }
-// };
 
 TaskSchema.methods.findById= async function (id) {
   const Task = mongoose.model("tasks", TaskSchema);
