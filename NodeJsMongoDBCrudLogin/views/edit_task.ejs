@@ -14,13 +14,13 @@
                   value="<%= task.nombre %>" required>
               </div>
               <div class="form-group">
-                <% if(task.planEstudios=="grado" ){ %>
+                <% if(task.planEstudios=="Grado" ){ %>
                   <select name="planEstudios">
                     <option selected value="Grado">Grado</option>
                     <option value="Master">Master</option>
                     <option value="Doctorado">Doctorado</option>
                   </select>
-                  <% }else if(task.planEstudios=="master" ){ %>
+                  <% }else if(task.planEstudios=="Master" ){ %>
                     <select name="planEstudios">
                       <option value="Grado">Grado</option>
                       <option selected value="Master">Master</option>
