@@ -17,6 +17,8 @@ router.post('/sugerencias/enviar', isAuthenticated, async (req, res) => {
 
     try {
         // Configuración del transportador de correo electrónico
+        //Para un correcto testeo de la aplicación, se debe entrar en https://ethereal.email/ con los datos de 
+        //la cuenta que figura abajo, y enviar sugerencias directamente desde la aplicación
         const transporter = nodemailer.createTransport({
             host: 'smtp.ethereal.email',
             port: 587,

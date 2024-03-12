@@ -168,11 +168,10 @@ router.post('/tasks/:id/addUser', isAuthenticated, async (req, res) => {
   const { id } = req.params;
   const users = req.body.users; //Cambiado para que coja el array de IDs
   const task = await Task.findById(id);
-  // TODO Cuando solo hay un valor, coge ese unico valor en vez de un array de un valor
   if (users != null) { //Controla si no se ha seleccionado ningun usuario (el select es null)
     if (Array.isArray(users)) {
       for (var i = 0; i < users.length; i++) { //Recorre el array de usuarios, mira si ya están añadidos, y si no los añade
-        if (! await task.usuario.includes(users[i])) {
+        if (!await task.usuario.includes(users[i])) {
           task.usuario.push(users[i]);
           await task.save();
         }
